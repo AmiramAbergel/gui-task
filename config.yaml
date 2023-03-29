@@ -1,0 +1,20 @@
+csrf_token: IjU5N2E0NWU4MTE5NGFiOTRjZjcxZWI1M2NkZjY5MTg0MmE5NTE0NjUi.ZCRkKg.noKJiA4QcvTxCVV1WgOnv82tivs
+mode: null
+next: false
+report_background_image: null
+tests:
+- false
+- false
+- false
+- false
+- false
+- false
+- false
+- false
+- false
+- false
+users:
+- csrf_token: null
+  email: null
+  password: null
+  user_type: null

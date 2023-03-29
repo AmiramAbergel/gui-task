@@ -1,5 +1,3 @@
-#!/usr/bin/env python
-
 import os
 import random
 
@@ -37,9 +35,10 @@ def validate_email(email):
 def generate_random_config():
   config_data = {
     'mode': random.choice(['Debug', 'Production']),
-    'tests': [f'Test {i}' for i in range(1, 11)],
-    'users': [],
-    'report_background_image': '',
+    'tests': [f'Test {i}' for i in random.sample(range(1, 11), 5)],
+    'users': [{'user_type': random.choice(['Admin', 'Standard']), 'email': 'test@test.com', 'password': 'password'} for
+              i in range(1, 5)],
+    'report_background_image': 'report_background.png',
     'hardware_acceleration': random.choice([True, False])
   }
   write_yaml(config_data)

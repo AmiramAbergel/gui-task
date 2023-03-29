@@ -10,9 +10,8 @@ app.secret_key = 'secret'
 @app.route('/', methods=['GET', 'POST'])
 def page_one():
   config_data = read_yaml()
-  form = PageOneForm()
+  form = PageOneForm(data=config_data)
   if request.method == 'POST':
-    print('dasdadsadasdssa')
     write_yaml(form.data)
     log_message("Saved configuration for Page 1.")
     flash('Configuration saved.')
@@ -21,17 +20,15 @@ def page_one():
     return render_template('pageOne.html', form=form, config=config_data)
 
 
-
-
 @app.route('/page-two', methods=['GET', 'POST'])
 def page_two():
   config_data = read_yaml()
   form = PageTwoForm()
   if request.method == 'POST':
-      write_yaml(form.data)
-      log_message("Saved configuration for Page 2.")
-      flash('Configuration saved.')
-      return redirect(url_for('page_one'))
+    write_yaml(form.data)
+    log_message("Saved configuration for Page 2.")
+    flash('Configuration saved.')
+    return redirect(url_for('page_one'))
   else:
     return render_template('pageTwo.html', form=form, config=config_data)
 

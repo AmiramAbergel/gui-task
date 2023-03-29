@@ -23,5 +23,7 @@ class PageTwoForm(FlaskForm):
 
 
 class UserForm(FlaskForm):
-  email = StringField('Email', validators=[DataRequired(), Email()])
   user_type = SelectField('Type', choices=[('admin', 'Admin'), ('standard', 'Standard')], validators=[DataRequired()])
+  email = StringField('Email', validators=[DataRequired(), Email()])
+  password = StringField('Password', validators=[DataRequired()])
+  remove_user = SubmitField('Remove User')

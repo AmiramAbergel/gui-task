@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <title>{% block title %}GUI{% endblock %}</title>
+    <link rel="stylesheet" href="/static/css/index.style.css" />
+    {% block css %}{% endblock %}
+  </head>
+  <body>
+    <div class="container">
+      {% for message in get_flashed_messages() %}
+      <div class="alert">{{ message }}</div>
+      {% endfor %} {% block content %}{% endblock %}
+      <div id="logger" class="mt-4">
+        <h5>Logger:</h5>
+        <pre>{{ log() }}</pre>
+      </div>
+    </div>
+    {% block js %}{% endblock %}
+  </body>
+</html>

@@ -4,7 +4,31 @@
   <h1>Page 1</h1>
   <form method="post" enctype="multipart/form-data" novalidate>
     <div class="form-group">
-      <button type="submit" class="btn">Next</button>
+      {{ form.csrf_token }}
+      <div class="mode">
+        {{ form.mode.label }}<br>
+        {{ form.mode }}<br>
+      </div>
+      <div class="tests">
+        {{ form.tests.label }}<br>
+        {% for test in form.tests %}
+          {{ test }} {{ loop.index }}<br>
+        {% endfor %}
+        <button type="button" id="check-all">Check All</button>
+        <button type="button" id="uncheck-all">Uncheck All</button>
+      </div>
+      <div class="users">
+        {{ form.users.label }}<br>
+        {% for user in form.users %}
+          {{ user.email.label }}: {{ user.email }} {{ user.user_type.label }}: {{ user.user_type }}<br>
+        {% endfor %}
+      </div>
+      <div class="report">
+        {{ form.report_background_image.label }}<br>
+        {{ form.report_background_image }}<br>
+        {{ form.report_background_image.data }}<br>
+      </div>
+      {{ form.next }}
     </div>
   </form>
 {% endblock %}

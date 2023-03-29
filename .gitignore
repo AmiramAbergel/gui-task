@@ -1,4 +1,4 @@
-### Node template
+
 # Logs
 logs
 *.log
@@ -43,7 +43,7 @@ build/Release
 /node_modules
 node_modules/
 jspm_packages/
-
+.node_modules
 node_modules
 
 .idea/

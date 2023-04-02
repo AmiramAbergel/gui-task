@@ -2,23 +2,112 @@
 {% block title %}Page 2{% endblock %}
 {% block content %}
   <h1>Page 2</h1>
-  <form method="post" enctype="multipart/form-data" action=".">
-    {{ form.csrf_token }}
-
-    <div class="section">
-      <h3>Use hardware acceleration when available</h3>
-
-      <label class="switch">
-        <input type="checkbox" name="Hardware Acceleration">
-        <span class="slider"></span>
-      </label>
-    </div>
+  <p>Fill in the form below.</p>
+  <form method="post" enctype="multipart/form-data" action="{{ url_for('page_two') }}">
+    {% block form %}
     <div class="form-group">
-      <a href="{{ url_for('page_one') }}" class="btn">
-        <button type="submit" class="btn">Finish</button>
-      </a>
+      {{ form.csrf_token }}
+      {% for class_name in page_two_classes %}
 
+          {% if class_name == 'mode' %}
+            <div class="mode">
+          {% if form.mode %} {{ form.mode.label }}<br />
+            {% for choice in form.mode.choices %}
+            <label>
+              <input type="radio" name="{{ form.mode.name }}" value="{{ choice[0] }}"
+              {% if config.mode is defined and config.mode is not none and choice[0] == config.mode.lower() %}checked{% endif %}> </label
+            >{{ choice[1] }}<br />
+            {% endfor %} {% endif %}
+
+            </div>
+          {% elif class_name == 'tests' %}
+            <div class="tests">
+            {{ form.tests.label }}<br />
+            {% for test in form.tests %}
+              <label>
+                <input type="checkbox" name="{{ form.tests.name }}-{{ loop.index0 }}"
+                value="{{ loop.index0 }}" {% if config.tests is defined and
+                config.tests[loop.index0].value == true %}checked{% endif %}>Test {{ loop.index}}</label
+              ><br />
+            {% endfor %}
+            <button class="btn" type="button" id="check-all" onclick="checkAll()">
+              Check All
+            </button>
+            <button class="btn" type="button" id="uncheck-all" onclick="uncheckAll()">
+              Uncheck All
+            </button>
+
+            </div>
+          {% elif class_name == 'users' %}
+            <div class="users">
+                          <table>
+              <thead>
+                <tr>
+                  <th>Type</th>
+                  <th>Email</th>
+                  <th>Password</th>
+                  <th>Remove</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for user_entry in form.users %}
+                <tr>
+                  <td>
+                    {{ user_entry.user_type(class="form-control",
+                    default=config.users[loop.index0].user_type if 'users' in config)
+                    }}
+                  </td>
+                  <td>
+                    {{ user_entry.email(class="form-control",
+                    value=config.users[loop.index0].email if 'users' in config) }}
+                  </td>
+                  <td>
+                    {{ user_entry.password(class="form-control",
+                    value=config.users[loop.index0].password if 'users' in config) }}
+                  </td>
+                  <td>
+                    <button
+                      class="btn btn-danger"
+                      type="button"
+                      onclick="removeRow(this)"
+                    >
+                      Remove
+                    </button>
+                  </td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+            <button class="btn" type="button" id="addRowButton" onclick="addRow()">
+              + Add Row
+            </button>
+
+            </div>
+          {% elif class_name == 'report' %}
+            <div class="report">
+              {{ form.report_background_image.label }}<br />
+            {{ form.report_background_image() }}<br />
+            </div>
+          {% elif class_name == 'section' %}
+            <div class="section">
+             <h3>Use hardware acceleration when available</h3>
+            <label class="switch">
+              <input
+                type="checkbox"
+                name="{{ form.hardware_acceleration.name }}"
+                {% if config.hardware_acceleration %}checked{%
+                endif %}
+              />
+              <span class="slider"></span>
+            </label>
+
+            </div>
+          {% endif %}
+      {% endfor %}
     </div>
-  </form>
+    {% endblock %}
 
+    <a href="{{ url_for('page_one') }}" class="btn">Back</a>
+    <button class="btn" type="submit">Finish</button>
+  </form>
 {% endblock %}

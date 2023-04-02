@@ -1,37 +1,23 @@
-from flask import Flask, render_template, redirect, url_for, flash, request
+import webbrowser
+from threading import Timer
 
-from forms import PageOneForm, PageTwoForm
-from utils import read_yaml, write_yaml, log_message
+from flask import Flask
 
-app = Flask(__name__)
-app.secret_key = 'secret'
-
-
-@app.route('/', methods=['GET', 'POST'])
-def page_one():
-  config_data = read_yaml()
-  form = PageOneForm(data=config_data)
-  if request.method == 'POST':
-    write_yaml(form.data)
-    log_message("Saved configuration for Page 1.")
-    flash('Configuration saved.')
-    return redirect(url_for('page_two'))
-  else:
-    return render_template('pageOne.html', form=form, config=config_data)
+import routes
 
 
-@app.route('/page-two', methods=['GET', 'POST'])
-def page_two():
-  config_data = read_yaml()
-  form = PageTwoForm()
-  if request.method == 'POST':
-    write_yaml(form.data)
-    log_message("Saved configuration for Page 2.")
-    flash('Configuration saved.')
-    return redirect(url_for('page_one'))
-  else:
-    return render_template('pageTwo.html', form=form, config=config_data)
+class GUIApp:
+  def __init__(self):
+    self.app = Flask(__name__)
+    self.app.secret_key = 'secret'
+
+  def run(self):
+    routes.router(self.app)
+    url = "http://127.0.0.1:5000"
+    Timer(1, lambda: webbrowser.open(url)).start()
+    self.app.run(debug=True)
 
 
 if __name__ == '__main__':
-  app.run(debug=True)
+  gui_app = GUIApp()
+  gui_app.run()

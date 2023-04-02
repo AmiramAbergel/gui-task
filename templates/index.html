@@ -9,12 +9,61 @@
     <title>{% block title %}GUI{% endblock %}</title>
     <link rel="stylesheet" href="/static/css/index.style.css" />
     {% block css %}{% endblock %}
+      <script>
+        function checkAll(){
+          fetch('/check-all')
+            .then(response => response.text())
+            .then(text => {
+              const checkboxes = document.querySelectorAll('.tests input[type="checkbox"]');
+              checkboxes.forEach(checkbox => checkbox.checked = true);
+            });
+        }
+        function uncheckAll(){
+          fetch('/uncheck-all')
+            .then(response => response.text())
+            .then(text => {
+              const checkboxes = document.querySelectorAll('.tests input[type="checkbox"]');
+              checkboxes.forEach(checkbox => checkbox.checked = false);
+            });
+        }
+
+        function removeRow(button) {
+          const row = button.parentNode.parentNode;
+          const index = Array.prototype.indexOf.call(row.parentNode.children, row);
+          fetch(`/remove-row/${index}`)
+            .then(response => {
+              if (response.status === 204) {
+                row.parentNode.removeChild(row);
+              }
+            });
+        }
+
+        function addRow() {
+          fetch('/add-row')
+            .then(response => response.text())
+            .then(() => {
+              const table = document.querySelector('.users table tbody');
+              const newRow = document.createElement('tr');
+
+               newRow.innerHTML = `
+                <td><select class="form-control" name="users-__index__-user_type"><option value="Admin">Admin</option><option value="Standard" selected>Standard</option></select></td>
+                <td><input class="form-control" name="users-__index__-email" type="email" required></td>
+                <td><input class="form-control" name="users-__index__-password" type="password" required></td>
+                <td><button class="btn btn-danger" type="button" onclick="removeRow(this)">Remove</button></td>
+              `;
+
+              table.appendChild(newRow);
+            });
+        }
+    </script>
   </head>
   <body>
     <div class="container">
       {% for message in get_flashed_messages() %}
       <div class="alert">{{ message }}</div>
-      {% endfor %} {% block content %}{% endblock %}
+      {% endfor %}
+
+      {% block content %}{% endblock %}
     </div>
   </body>
 </html>

@@ -31,21 +31,21 @@ def write_yaml(data):
       return {}
 
 
-def validate_email(email):
-  return "@" in email and "." in email
-
-
 def generate_random_config():
   config_data = {
-    'mode': 'Debug',
-    'tests': [{'name': 'Test 1', 'value': False}, {'name': 'Test 2', 'value': False},
-              {'name': 'Test 3', 'value': False},
-              {'name': 'Test 4', 'value': False}, {'name': 'Test 5', 'value': False},
-              {'name': 'Test 6', 'value': False},
-              {'name': 'Test 7', 'value': False}, {'name': 'Test 8', 'value': False},
-              {'name': 'Test 9', 'value': False},
-              {'name': 'Test 10', 'value': False}],
-
+    'mode': 'debug',
+    'tests': [
+      {'name': 'Test 1', 'value': False},
+      {'name': 'Test 2', 'value': False},
+      {'name': 'Test 3', 'value': False},
+      {'name': 'Test 4', 'value': False},
+      {'name': 'Test 5', 'value': False},
+      {'name': 'Test 6', 'value': False},
+      {'name': 'Test 7', 'value': False},
+      {'name': 'Test 8', 'value': False},
+      {'name': 'Test 9', 'value': False},
+      {'name': 'Test 10', 'value': False}
+    ],
     'users': [
       {'user_type': 'Admin', 'email': '', 'password': ''},
       {'user_type': 'Standard', 'email': 'user@example.com', 'password': 'password'}
@@ -75,8 +75,7 @@ def file_upload(f, form, app):
     'path': file_path
   }
   form_data['tests'] = [{'name': f'Test {i + 1}', 'value': bool(request.form.get(f"{form.tests.name}-{i}"))} for i
-                        in
-                        range(len(form_data['tests']))]
+                        in range(len(form_data['tests']))]
   write_yaml(form_data)
   log_message("Saved configuration for Page.")
   flash('Configuration saved.')
@@ -85,7 +84,6 @@ def file_upload(f, form, app):
 def classesShuffle():
   classes = ['mode', 'tests', 'users', 'report', 'section']
   random.shuffle(classes)
-
   page_one_classes = classes[:3]
   page_two_classes = classes[3:]
 

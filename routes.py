@@ -1,6 +1,5 @@
 from flask import render_template, redirect, url_for, request
 
-# Import the app instance from the main file
 from forms import PageOneForm
 from utils import read_yaml, write_yaml, file_upload, classesShuffle
 

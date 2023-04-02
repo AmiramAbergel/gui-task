@@ -33,7 +33,6 @@ To run the application, navigate to the project directory and run the following 
 This will launch the GUI in your default web browser, allowing you to interact with it and return data to your script.
 
 *** Note that the project includes an executable file for easy execution.
- 
 
 ## File Structure
 
@@ -45,3 +44,18 @@ This will launch the GUI in your default web browser, allowing you to interact w
 - `pageOne.html`: This is the HTML template for Page 1 of the application, which includes the form for configuring settings on Page 1.
 - `pageTwo.html`: This is the HTML template for Page 2 of the application, which includes the form for configuring settings on Page 2.
 - `index.style.css`:  This is a CSS-style file used by index.html. It  contains instructions for how index.html elements should be displayed on the page.
+
+
+## Screenshot
+
+![Screenshot 2023-04-02 212118](https://user-images.githubusercontent.com/39462161/229371432-0c484338-42a4-4fc1-9cbc-f01b6bf80125.png)
+![Screenshot 2023-04-02 212217](https://user-images.githubusercontent.com/39462161/229371472-9d4ae2c1-d3b7-47ce-81c6-5247b83f64f2.png)
+
+
+## Video
+
+
+https://user-images.githubusercontent.com/39462161/229372739-1fd7d308-9db4-48ba-8a40-51f573695d50.mp4
+
+
+

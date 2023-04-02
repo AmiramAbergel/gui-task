@@ -8,7 +8,6 @@ page_one_classes, page_two_classes = classesShuffle()
 
 
 def router(app):
-  
   @app.route('/', methods=['GET', 'POST'])
   def page_one():
     config_data = read_yaml()

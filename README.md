@@ -32,7 +32,6 @@ To run the application, navigate to the project directory and run the following 
   
 This will launch the GUI in your default web browser, allowing you to interact with it and return data to your script.
 
-*** Note that the project includes an executable file for easy execution.
 
 ## File Structure
 

@@ -1,5 +1,4 @@
 import webbrowser
-from threading import Timer
 
 from flask import Flask
 
@@ -14,7 +13,7 @@ class GUIApp:
   def run(self):
     routes.router(self.app)
     url = "http://127.0.0.1:5000"
-    Timer(1, lambda: webbrowser.open(url)).start()
+    webbrowser.open_new_tab(url)
     self.app.run(debug=True)
 
 

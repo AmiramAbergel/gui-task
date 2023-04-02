@@ -13,11 +13,12 @@ class TestForm(FlaskForm):
   value = BooleanField('Value')
 
 
-class PageOneForm(FlaskForm):
-  def generate_default_tests(self):
-    tests = [{'name': f'Test {i}', 'value': False} for i in range(1, 11)]
-    return tests
+def generate_default_tests():
+  tests = [{'name': f'Test {i}', 'value': False} for i in range(1, 11)]
+  return tests
 
+
+class PageOneForm(FlaskForm):
   mode = RadioField('Mode', name='mode', choices=[('debug', 'Debug'), ('production', 'Production')],
                     validators=[DataRequired()])
   tests = FieldList(FormField(TestForm, default=generate_default_tests), name='tests', min_entries=10, max_entries=10,

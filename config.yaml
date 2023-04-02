@@ -1,33 +1,41 @@
-csrf_token: ImNlZTg5NGMxNTgwY2VhZTdjM2M2ZWNhYWFkNDhhNTAwZWNiYmQ2YTYi.ZCm6YA.pNXFKbaf_OSE5kO-62wZKFQJnxg
-hardware_acceleration: false
-mode: null
+csrf_token: ImNlZTg5NGMxNTgwY2VhZTdjM2M2ZWNhYWFkNDhhNTAwZWNiYmQ2YTYi.ZCnNTw.-xpjnprHYX7mY7bQbxDwnio02zM
+hardware_acceleration: true
+mode: production
 next: false
-report_background_image:
-  filename: maxresdefault.jpg
-  path: C:\Users\user\PycharmProjects\pythonInterviewProject\static\report_background_image\maxresdefault.jpg
+report_background_image: null
 tests:
-- name: Test 1
+- csrf_token: null
+  name: null
   value: false
-- name: Test 2
+- csrf_token: null
+  name: null
   value: false
-- name: Test 3
+- csrf_token: null
+  name: null
   value: false
-- name: Test 4
+- csrf_token: null
+  name: null
   value: false
-- name: Test 5
+- csrf_token: null
+  name: null
   value: false
-- name: Test 6
-  value: true
-- name: Test 7
+- csrf_token: null
+  name: null
   value: false
-- name: Test 8
+- csrf_token: null
+  name: null
   value: false
-- name: Test 9
+- csrf_token: null
+  name: null
   value: false
-- name: Test 10
+- csrf_token: null
+  name: null
+  value: false
+- csrf_token: null
+  name: null
   value: false
 users:
 - csrf_token: null
-  email: s
-  password: s
-  user_type: admin
+  email: null
+  password: null
+  user_type: null

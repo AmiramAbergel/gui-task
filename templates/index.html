@@ -38,24 +38,30 @@
             });
         }
 
-        function addRow() {
-          fetch('/add-row')
+            function addRow() {
+        const invalidInputs = document.querySelectorAll('.users input:invalid');
+
+        if (invalidInputs.length > 0) {
+            return;
+        }
+
+        fetch('/add-row')
             .then(response => response.text())
             .then(() => {
-              const table = document.querySelector('.users table tbody');
-              const newRow = document.createElement('tr');
+                const table = document.querySelector('.users table tbody');
+                const newRow = document.createElement('tr');
 
-               newRow.innerHTML = `
-                <td><select class="form-control" name="users-__index__-user_type"><option value="Admin">Admin</option><option value="Standard" selected>Standard</option></select></td>
-                <td><input class="form-control" name="users-__index__-email" type="email" required></td>
-                <td><input class="form-control" name="users-__index__-password" type="password" required></td>
-                <td><button class="btn btn-danger" type="button" onclick="removeRow(this)">Remove</button></td>
-              `;
+                newRow.innerHTML = `
+                    <td><select class="form-control" name="users-__index__-user_type"><option value="Admin">Admin</option><option value="Standard" selected>Standard</option></select></td>
+                    <td><input class="form-control" name="users-__index__-email" type="email" required></td>
+                    <td><input class="form-control" name="users-__index__-password" type="password" required></td>
+                    <td><button class="btn btn-danger" type="button" onclick="removeRow(this)">Remove</button></td>
+                `;
 
-              table.appendChild(newRow);
+                table.appendChild(newRow);
             });
-        }
-    </script>
+    }
+</script>
   </head>
   <body>
     <div class="container">

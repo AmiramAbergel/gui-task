@@ -1,0 +1,33 @@
+csrf_token: ImJiYmM1MDg2N2EwNmM5ZjQwNDA3YmNmMmZiN2VhMjJkMzQ3NWRkNmYi.ZCr1_g.Bfv8Yrr8Cc8FP2ngDUhGY6UydZM
+hardware_acceleration: false
+mode: production
+next: false
+report_background_image:
+  filename: Screenshot_20221029_212707.png
+  path: C:\Users\user\PycharmProjects\pythonInterviewProject\static\report_background_image\Screenshot_20221029_212707.png
+tests:
+- name: Test 1
+  value: false
+- name: Test 2
+  value: false
+- name: Test 3
+  value: false
+- name: Test 4
+  value: false
+- name: Test 5
+  value: false
+- name: Test 6
+  value: false
+- name: Test 7
+  value: false
+- name: Test 8
+  value: false
+- name: Test 9
+  value: false
+- name: Test 10
+  value: false
+users:
+- csrf_token: null
+  email: null
+  password: null
+  user_type: null

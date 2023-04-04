@@ -19,7 +19,7 @@ def router(app):
       else:
         form_data = form.data
         updated_form = tests_convert_to_dict(form_data)
-        write_yaml(updated_form.data)
+        write_yaml(updated_form)
         return redirect(url_for('page_two'))
     else:
       return render_template('pageOne.html', form=form, config=config_data, page_one_classes=page_one_classes,
@@ -37,7 +37,7 @@ def router(app):
       else:
         form_data = form.data
         updated_form = tests_convert_to_dict(form_data)
-        write_yaml(updated_form.data)
+        write_yaml(updated_form)
         return redirect(url_for('page_one'))
     else:
       return render_template('pageTwo.html', form=form, config=config_data, page_two_classes=page_two_classes)

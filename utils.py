@@ -97,9 +97,19 @@ def file_upload(file, form, app, config_data, route_name):
 
 
 def tests_convert_to_dict(form_data):
-  tests_data = [{'name': f"Test {i + 1}", 'value': test_entry['test_value']} for i, test_entry in
-                enumerate(form_data['tests'])]
-  form_data['tests'] = tests_data
+  print(form_data)
+  tests_data = form_data.get('tests', [])
+  if len(tests_data) == 0:
+    return form_data
+
+  tests_list = [
+    {
+      'name': f"Test {index + 1}",
+      'value': item['test_value']
+    }
+    for index, item in enumerate(tests_data)
+  ]
+  form_data['tests'] = tests_list
   return form_data
 
 

@@ -3,7 +3,7 @@ import webbrowser
 from flask import Flask
 
 import routes
-from utils import read_yaml
+from utils import read_yaml, log_message
 
 
 class GUIApp:
@@ -25,5 +25,6 @@ class GUIApp:
 if __name__ == '__main__':
   gui_app = GUIApp()
   gui_app.run()
+  log_message("The script started.")
   yaml_data = gui_app.get_data()
   print(yaml_data)

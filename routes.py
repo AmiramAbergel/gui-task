@@ -10,7 +10,9 @@ def router(app):
   def page_one():
     config_data = read_yaml()
     form = PageForm(allowed_classes=page_one_classes)
+
     if request.method == 'POST' or form.validate_on_submit():
+      form.process(request.form)
       file = request.files.get('report_background_image')
       if file:
         return file_upload(file, form, app, 'page_two')
@@ -26,6 +28,7 @@ def router(app):
     config_data = read_yaml()
     form = PageForm(allowed_classes=page_two_classes)
     if request.method == 'POST' or form.validate_on_submit():
+      form.process(request.form)
       file = request.files.get('report_background_image')
       if file:
         return file_upload(file, form, app, 'page_two')

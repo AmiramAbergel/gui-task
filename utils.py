@@ -18,6 +18,7 @@ def read_yaml():
         data = yaml.load(yaml_file, Loader=FullLoader)
         return data
       except yaml.YAMLError as e:
+        log_message("Error reading YAML file.")
         print(f"Error reading YAML file: {e}")
         return {}
 
@@ -30,6 +31,7 @@ def write_yaml(data):
         if existing_data is None:
           existing_data = {}
       except yaml.YAMLError as e:
+        log_message("Error reading YAML file.")
         print(f"Error reading YAML file: {e}")
         return {}
   else:
@@ -41,6 +43,7 @@ def write_yaml(data):
     try:
       yaml.safe_dump(existing_data, yaml_file)
     except yaml.YAMLError as e:
+      log_message("Error writing YAML file.")
       print(f"Error writing YAML file: {e}")
       return {}
 

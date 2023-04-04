@@ -10,32 +10,26 @@
       {% for class_name in page_two_classes %}
           {% if class_name == 'mode' %}
             <div class="mode">
-          {% if form.mode %} {{ form.mode.label }}<br />
-            {% for choice in form.mode.choices %}
-            <label>
-              <input type="radio" name="{{ form.mode.name }}" value="{{ choice[0] }}"
-              {% if config.mode is defined and config.mode is not none and choice[0] == config.mode.lower() %}checked{% endif %}> </label
-            >{{ choice[1] }}<br />
-            {% endfor %} {% endif %}
-
+              {{ form.mode.label }}<br />
+              {% for choice in form.mode.choices %}
+                <input type="radio" id="{{ choice[0] }}" name="{{ form.mode.name }}" value="{{ choice[0] }}"
+                       {% if config.mode is defined and config.mode is not none and config.mode.lower() == choice[0] %}checked{% endif %}>
+                <label for="{{ choice[0] }}"></label> {{ choice[1] }}<br />
+              {% endfor %}
             </div>
           {% elif class_name == 'tests' %}
             <div class="tests">
-            {{ form.tests.label }}<br />
-            {% for test in form.tests %}
-              <label>
-                <input type="checkbox" name="{{ form.tests.name }}-{{ loop.index0 }}"
-                value="{{ loop.index0 }}" {% if config.tests is defined and
-                config.tests[loop.index0].value == true %}checked{% endif %}>Test {{ loop.index}}</label
-              ><br />
-            {% endfor %}
-            <button class="btn" type="button" id="check-all" onclick="checkAll()">
-              Check All
-            </button>
-            <button class="btn" type="button" id="uncheck-all" onclick="uncheckAll()">
-              Uncheck All
-            </button>
-
+              {{ form.tests.label }}<br />
+              {% for test_form in form.tests %}
+                <input type="checkbox" id="{{ loop.index0 }}" name="{{ config.tests[loop.index0].name }}" value="{{ loop.index0 }}" {% if config.tests is defined and config.tests[loop.index0].value == true %}checked{% endif %}>
+                <label for="{{ loop.index0 }}"> {{ config.tests[loop.index0].name }}</label><br />
+              {% endfor %}
+              <button class="btn" type="button" id="check-all" onclick="checkAll()">
+                Check All
+              </button>
+              <button class="btn" type="button" id="uncheck-all" onclick="uncheckAll()">
+                Uncheck All
+              </button>
             </div>
           {% elif class_name == 'users' %}
             <div class="users">

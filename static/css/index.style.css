@@ -158,11 +158,3 @@ input:checked + .slider:before {
 .slider.round:before {
   border-radius: 50%;
 }
-
-.users input:invalid {
-    border-color: red;
-}
-
-.users input:required:valid {
-    border-color: green;
-}

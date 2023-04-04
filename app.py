@@ -3,6 +3,7 @@ import webbrowser
 from flask import Flask
 
 import routes
+from utils import read_yaml
 
 
 class GUIApp:
@@ -16,7 +17,13 @@ class GUIApp:
     webbrowser.open_new_tab(url)
     self.app.run(debug=True)
 
+  def get_data(self):
+    yaml_data = read_yaml()
+    return yaml_data
+
 
 if __name__ == '__main__':
   gui_app = GUIApp()
   gui_app.run()
+  yaml_data = gui_app.get_data()
+  print(yaml_data)

@@ -78,12 +78,13 @@ content %}
               + Add Row
             </button>
           </div>
-        {% elif class_name == 'report' %}
-            <div class="report">
-              {{ form.report_background_image.label }}<br />
+        {% elif class_name == 'report_background_image' %}
+          <div class="report">
+            {{ form.report_background_image.label }}<br />
             {{ form.report_background_image() }}<br />
-            </div>
-        {% elif class_name == 'section' %}
+                      <label for="report_background_image_path"></label><input type="text" id="report_background_image_path" class="form-control" value="{{ config.report_background_image.path if 'report_background_image' in config }}" readonly />
+          </div>
+        {% elif class_name == 'hardware_acceleration' %}
         <div class="section">
           <h3>Use hardware acceleration when available</h3>
           <label class="switch">

@@ -2,7 +2,7 @@ import os
 import random
 
 import yaml
-from flask import request, flash
+from flask import flash, url_for, redirect
 from werkzeug.utils import secure_filename
 from yaml.loader import FullLoader
 
@@ -23,9 +23,23 @@ def read_yaml():
 
 
 def write_yaml(data):
-  with open(CONFIG_FILE, 'w+') as yaml_file:
+  if os.path.exists(CONFIG_FILE):
+    with open(CONFIG_FILE, 'r') as yaml_file:
+      try:
+        existing_data = yaml.safe_load(yaml_file)
+        if existing_data is None:
+          existing_data = {}
+      except yaml.YAMLError as e:
+        print(f"Error reading YAML file: {e}")
+        return {}
+  else:
+    existing_data = {}
+
+  existing_data.update(data)
+
+  with open(CONFIG_FILE, 'w') as yaml_file:
     try:
-      yaml.dump(data, yaml_file)
+      yaml.safe_dump(existing_data, yaml_file)
     except yaml.YAMLError as e:
       print(f"Error writing YAML file: {e}")
       return {}
@@ -61,28 +75,31 @@ def log_message(message):
   print(message)
 
 
-def file_upload(f, form, app):
-  filename = secure_filename(f.filename)
-  f.save(os.path.join(
-    app.static_folder, 'report_background_image', filename
-  ))
-  form_data = form.data
+def file_upload(file, form, app, route_name):
+  filename = secure_filename(file.filename)
+  file.save(os.path.join(app.static_folder, 'report_background_image', filename))
   file_path = os.path.join(
     app.static_folder, 'report_background_image', filename
   )
-  form_data['report_background_image'] = {
-    'filename': filename,
-    'path': file_path
-  }
-  form_data['tests'] = [{'name': f'Test {i + 1}', 'value': bool(request.form.get(f"{form.tests.name}-{i}"))} for i
-                        in range(len(form_data['tests']))]
-  write_yaml(form_data)
-  log_message("Saved configuration for Page.")
-  flash('Configuration saved.')
+  if file:
+    form.report_background_image.data = file_path
+    config_data = read_yaml()
+    config_data['report_background_image'] = {
+      'filename': filename,
+      'path': file_path
+    }
+
+    write_yaml(config_data)
+    flash('Configuration saved.')
+    log_message("Saved configuration for Page.")
+  else:
+    write_yaml(form.data)
+
+  return redirect(url_for(route_name))
 
 
 def classesShuffle():
-  classes = ['mode', 'tests', 'users', 'report', 'section']
+  classes = ['mode', 'tests', 'users', 'report_background_image', 'hardware_acceleration']
   random.shuffle(classes)
   page_one_classes = classes[:3]
   page_two_classes = classes[3:]

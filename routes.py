@@ -1,21 +1,19 @@
-from flask import render_template, redirect, url_for, request
+from flask import render_template, request, redirect, url_for
 
-from forms import PageOneForm
+from forms import PageForm
 from utils import read_yaml, write_yaml, file_upload, classesShuffle
 
 page_one_classes, page_two_classes = classesShuffle()
-
 
 def router(app):
   @app.route('/', methods=['GET', 'POST'])
   def page_one():
     config_data = read_yaml()
-    form = PageOneForm()
-    if request.method == 'POST':
+    form = PageForm(allowed_classes=page_one_classes)
+    if request.method == 'POST' or form.validate_on_submit():
       file = request.files.get('report_background_image')
       if file:
-        file_upload(file, form, app)
-        return redirect(url_for('page_two'))
+        return file_upload(file, form, app, 'page_two')
       else:
         write_yaml(form.data)
         return redirect(url_for('page_two'))
@@ -26,15 +24,14 @@ def router(app):
   @app.route('/page-two', methods=['GET', 'POST'])
   def page_two():
     config_data = read_yaml()
-    form = PageOneForm()
-    if request.method == 'POST':
+    form = PageForm(allowed_classes=page_two_classes)
+    if request.method == 'POST' or form.validate_on_submit():
       file = request.files.get('report_background_image')
       if file:
-        file_upload(file, form, app)
-        return redirect(url_for('page_two'))
+        return file_upload(file, form, app, 'page_two')
       else:
         write_yaml(form.data)
-        return redirect(url_for('page_two'))
+        return redirect(url_for('page_one'))
     else:
       return render_template('pageTwo.html', form=form, config=config_data, page_two_classes=page_two_classes)
 

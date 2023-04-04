@@ -1,27 +1,29 @@
-{% extends 'index.html' %} {% block title %}Page 1{% endblock %} {% block
-content %}
-<h1>Page 1</h1>
-<p>Fill in the form below.</p>
-<form method="post" enctype="multipart/form-data" action="/">
+{% extends 'index.html' %} {% block title %}Page 1{% endblock %}
+{% block content %}
+  <h1>Page 1</h1>
+  <p>Fill in the form below.</p>
+  <form method="post" enctype="multipart/form-data" action="/">
     {% block form %}
       <div class="form-group">
-        {{ form.csrf_token }}
+        {{ form.hidden_tag() }}
         {% for class_name in page_one_classes %}
             {% if class_name == 'mode' %}
               <div class="mode">
                 {{ form.mode.label }}<br />
                 {% for choice in form.mode.choices %}
                   <input type="radio" id="{{ choice[0] }}" name="{{ form.mode.name }}" value="{{ choice[0] }}"
-                         {% if config.mode is defined and config.mode is not none and config.mode.lower() == choice[0] %}checked{% endif %}>
+                         {% if config.mode is defined and config.mode is not none
+                         and config.mode.lower() == choice[0] %}checked{% endif %}>
                   <label for="{{ choice[0] }}"></label> {{ choice[1] }}<br />
                 {% endfor %}
               </div>
             {% elif class_name == 'tests' %}
               <div class="tests">
                 {{ form.tests.label }}<br />
-                {% for test_form in form.tests %}
-                  <input type="checkbox" id="{{ loop.index0 }}" name="{{ config.tests[loop.index0].name }}" value="{{ loop.index0 }}" {% if config.tests is defined and config.tests[loop.index0].value == true %}checked{% endif %}>
-                  <label for="{{ loop.index0 }}"> {{ config.tests[loop.index0].name }}</label><br />
+                {% for test_entry in form.tests %}
+                  {{ form.hidden_tag() }}
+                  <input type="checkbox" id="test-{{ loop.index0 }}" name="tests-{{ loop.index0 }}-test_value" value="true" {% if config.tests is defined and config.tests[loop.index0].value == true %}checked{% endif %}>
+                  <label for="test-{{ loop.index0 }}"></label>Test {{loop.index}}<br />
                 {% endfor %}
                 <button class="btn" type="button" id="check-all" onclick="checkAll()"> Check All </button>
                 <button class="btn" type="button" id="uncheck-all" onclick="uncheckAll()"> Uncheck All </button>
@@ -39,6 +41,7 @@ content %}
                   </thead>
                   <tbody>
                     {% for user_entry in form.users %}
+                      {{ form.hidden_tag() }}
                       <tr>
                         <td>
                           {{ user_entry.user_type(class="form-control",
@@ -59,7 +62,7 @@ content %}
                     {% endfor %}
                   </tbody>
                 </table>
-              <button class="btn" type="button" id="addRowButton" onclick="addRow()">+ Add Row</button>
+              <button class="btn" type="button" id="addRowButton" onclick="addRow()">Add Row +</button>
               </div>
             {% elif class_name == 'report_background_image' %}
               <div class="report">
@@ -83,7 +86,6 @@ content %}
         {% endfor %}
       </div>
     {% endblock %}
-
-  <button class="btn" type="submit">Next</button>
-</form>
+    <button class="btn" type="submit">Next</button>
+  </form>
 {% endblock %}

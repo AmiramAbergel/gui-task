@@ -64,8 +64,7 @@ def generate_random_config():
       {'name': 'Test 10', 'value': False}
     ],
     'users': [
-      {'user_type': 'Admin', 'email': '', 'password': ''},
-      {'user_type': 'Standard', 'email': 'user@example.com', 'password': 'password'}
+      {'user_type': 'Admin', 'email': '', 'password': ''}
     ],
     'report_background_image': 'static/report_background.png',
     'hardware_acceleration': True
@@ -78,27 +77,30 @@ def log_message(message):
   print(message)
 
 
-def file_upload(file, form, app, route_name):
-  filename = secure_filename(file.filename)
-  file.save(os.path.join(app.static_folder, 'report_background_image', filename))
-  file_path = os.path.join(
-    app.static_folder, 'report_background_image', filename
-  )
+def file_upload(file, form, app, config_data, route_name):
   if file:
-    form.report_background_image.data = file_path
-    config_data = read_yaml()
-    config_data['report_background_image'] = {
+    filename = secure_filename(file.filename)
+    file.save(os.path.join(app.static_folder, 'report_background_image', filename))
+    file_path = os.path.join(
+      app.static_folder, 'report_background_image', filename
+    )
+    form.report_background_image.data = {
       'filename': filename,
       'path': file_path
     }
 
-    write_yaml(config_data)
-    flash('Configuration saved.')
-    log_message("Saved configuration for Page.")
-  else:
-    write_yaml(form.data)
-
+  updated_form = tests_convert_to_dict(form.data)
+  write_yaml(updated_form)
+  flash('Configuration saved.')
+  log_message("Saved configuration for Page.")
   return redirect(url_for(route_name))
+
+
+def tests_convert_to_dict(form_data):
+  tests_data = [{'name': f"Test {i + 1}", 'value': test_entry['test_value']} for i, test_entry in
+                enumerate(form_data['tests'])]
+  form_data['tests'] = tests_data
+  return form_data
 
 
 def classesShuffle():

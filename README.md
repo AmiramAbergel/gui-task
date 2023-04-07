@@ -17,7 +17,7 @@ You can also upload a new report background image, and you can also select which
 
 ## Installation
   
-1. Make sure you have Python 3.6 or later installed on your system. You can download it from the [official website](https://www.python.org/downloads/).
+1. Make sure you have **Python 3.6.2** or later installed on your system. You can download it from the [official website](https://www.python.org/downloads/).
 2. Ensure you have the latest stable version of [pip](https://pypi.org/project/pip/). To check your pip version,</br> 
    run `pip --version `. To update pip, run `python -m pip install --upgrade pip`.
 3. Clone this repository to your local machine:

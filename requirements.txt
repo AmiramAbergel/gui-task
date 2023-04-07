@@ -1,7 +1,8 @@
-Flask
+Flask==2.0.1
 Flask-WTF
 PyYAML
 Werkzeug
 WTForms
-Jinja2
+Jinja2==3.0.0
 platformdirs
+email-validator

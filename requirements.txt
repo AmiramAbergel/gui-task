@@ -1,7 +1,7 @@
 Flask
-Flask_WTF==1.1.1
-PyYAML==6.0
-Werkzeug==2.2.3
-WTForms==3.0.1
-Jinja2==3.1.2
-platformdirs==3.2.0
+Flask_WTF
+PyYAML
+Werkzeug
+WTForms
+Jinja2
+platformdirs

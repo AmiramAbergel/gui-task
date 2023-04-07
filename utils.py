@@ -99,6 +99,7 @@ def file_upload(file, form, app, config_data, route_name):
 def tests_convert_to_dict(form_data):
   print(form_data)
   tests_data = form_data.get('tests', [])
+  print("Line 102", tests_data)
   if len(tests_data) == 0:
     return form_data
 
@@ -109,6 +110,7 @@ def tests_convert_to_dict(form_data):
     }
     for index, item in enumerate(tests_data)
   ]
+  print("Line 113", tests_list)
   form_data['tests'] = tests_list
   return form_data
 

@@ -36,7 +36,7 @@ class PageForm(FlaskForm):
 
   mode = RadioField('Mode', name='mode', choices=[('debug', 'Debug'), ('production', 'Production')],
                     validators=[DataRequired()])
-  tests = FieldList(FormField(create_test_form), name='tests', min_entries=10, max_entries=10,
+  tests = FieldList(FormField(create_test_form), min_entries=10, max_entries=10,
                     validators=[DataRequired()])
   users = FieldList(FormField(create_user_form), name='users', min_entries=1, validators=[validate_users])
   report_background_image = FileField('Report Background Image',
@@ -45,7 +45,13 @@ class PageForm(FlaskForm):
 
 
 class TestForm(FlaskForm):
-  test_value = BooleanField('Test Value')
+  def __init__(self, *args, **kwargs):
+    super(TestForm, self).__init__(*args, **kwargs)
+    self.test_name.default = self.test_value.name 
+    self.process()
+
+  test_value = BooleanField(label='Test Checkbox')
+  test_name = StringField()
 
 
 class UserForm(FlaskForm):

@@ -6,7 +6,6 @@
   <form method="post" enctype="multipart/form-data" action="{{ url_for('page_two') }}">
     {% block form %}
       <div class="form-group">
-        {{ form.hidden_tag() }}
         {% for class_name in page_two_classes %}
             {% if class_name == 'mode' %}
               <div class="mode">
@@ -22,8 +21,7 @@
               <div class="tests">
                 {{ form.tests.label }}<br />
                 {% for test_entry in form.tests %}
-                  {{ form.hidden_tag() }}
-                  <input type="checkbox" id="test-{{ loop.index0 }}" name="tests-{{ loop.index0 }}-test_value" value="true" {% if config.tests is defined and config.tests|length > loop.index0 and config.tests[loop.index0].value == true %}checked{% endif %}>
+                  <input type="checkbox" id="test-{{ loop.index0 }}" name="tests" value="true" {% if config.tests is defined and config.tests|length > loop.index0 and config.tests[loop.index0].value == true %}checked{% endif %}>
 
                   <label for="test-{{ loop.index0 }}"></label>Test {{loop.index}}<br />
                 {% endfor %}

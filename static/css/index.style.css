@@ -190,3 +190,12 @@ input:checked + .slider:before {
 .tests .tests-checkbox {
   display: none;
 }
+
+
+.users input:invalid {
+    border-color: red;
+}
+
+.users input:required:valid {
+    border-color: green;
+}

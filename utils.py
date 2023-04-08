@@ -2,7 +2,7 @@ import os
 import random
 
 import yaml
-from flask import flash, url_for, redirect
+from flask import url_for, redirect
 from werkzeug.utils import secure_filename
 from yaml.loader import FullLoader
 
@@ -42,7 +42,7 @@ def write_yaml(data):
   with open(CONFIG_FILE, 'w') as yaml_file:
     try:
       yaml.safe_dump(existing_data, yaml_file)
-      flash('Configuration saved.')
+
     except yaml.YAMLError as e:
       log_message("Error writing YAML file.")
       print(f"Error writing YAML file: {e}")
@@ -67,7 +67,6 @@ def generate_random_config():
     'users': [
       {'user_type': 'Admin', 'email': '', 'password': ''}
     ],
-    'report_background_image': 'static/report_background.png',
     'hardware_acceleration': True
   }
   write_yaml(config_data)
@@ -92,7 +91,6 @@ def file_upload(file, form, app, config_data, route_name):
 
   updated_form = tests_convert_to_dict(form.data)
   write_yaml(updated_form)
-  flash('Configuration saved.')
   log_message("Saved configuration for Page.")
   return redirect(url_for(route_name))
 

@@ -9,17 +9,20 @@ page_one_classes, page_two_classes = classesShuffle()
 def router(app):
   @app.route('/', methods=['GET', 'POST'])
   def page_one():
+    flash('The app is running.')
     config_data = read_yaml()
     form = PageForm(allowed_classes=page_one_classes)
     if request.method == 'POST' or form.validate_on_submit():
       form.process(request.form)
       file = request.files.get('report_background_image')
       if file:
+        
         return file_upload(file, form, app, config_data, 'page_two')
       else:
         form_data = form.data
         updated_form = tests_convert_to_dict(form_data)
         write_yaml(updated_form)
+
         return redirect(url_for('page_two'))
     else:
       return render_template('pageOne.html', form=form, config=config_data, page_one_classes=page_one_classes,
@@ -29,22 +32,27 @@ def router(app):
   def page_two():
     config_data = read_yaml()
     form = PageForm(allowed_classes=page_two_classes)
+    flash('Configuration saved.')
     if request.method == 'POST' or form.validate_on_submit():
       form.process(request.form)
       file = request.files.get('report_background_image')
       if file:
+
         return file_upload(file, form, app, config_data, 'finishPage')
       else:
         form_data = form.data
         updated_form = tests_convert_to_dict(form_data)
         write_yaml(updated_form)
+
         return redirect(url_for('finishPage'))
     else:
+
       return render_template('pageTwo.html', form=form, config=config_data, page_two_classes=page_two_classes)
 
   @app.route('/finishPage', methods=['GET'])
   def finishPage():
     flash('Finished successfully.')
+
     return render_template('finishPage.html')
 
   @app.route('/check-all', methods=['GET', 'POST'])
@@ -68,7 +76,7 @@ def router(app):
   @app.route('/remove-row/<int:index>', methods=['GET', 'POST'])
   def remove_row(index):
     config_data = read_yaml()
-    if 1 <= index < len(config_data['users']):
+    if len(config_data['users']) > 1 <= index:
       config_data['users'].pop(index)
       write_yaml(config_data)
 
@@ -84,7 +92,6 @@ def router(app):
           empty_cell = True
           break
       if not empty_cell:
-        config_data['users'].append({'user_type': 'Standard', 'email': '', 'password': ''})
         write_yaml(config_data)
 
     return ('', 204)

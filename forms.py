@@ -1,6 +1,7 @@
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileRequired, FileAllowed
-from wtforms import StringField, RadioField, SelectField, FileField, BooleanField, FieldList, FormField, PasswordField
+from wtforms import StringField, RadioField, SelectField, FileField, BooleanField, FieldList, FormField, PasswordField, \
+  EmailField
 from wtforms.validators import DataRequired, Email, ValidationError
 
 from utils import log_message
@@ -53,5 +54,5 @@ class TestForm(FlaskForm):
 
 class UserForm(FlaskForm):
   user_type = SelectField('Type', choices=[('admin', 'Admin'), ('standard', 'Standard')], validators=[DataRequired()])
-  email = StringField('Email', validators=[DataRequired(), Email()])
+  email = EmailField('Email', validators=[DataRequired(), Email()])
   password = PasswordField('Password', validators=[DataRequired()])

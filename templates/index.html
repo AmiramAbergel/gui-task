@@ -38,13 +38,9 @@
             });
         }
 
-            function addRow() {
+        function addRow() {
         const invalidInputs = document.querySelectorAll('.users input:invalid');
-
-        if (invalidInputs.length > 0) {
-            return;
-        }
-
+        if (invalidInputs.length > 0) return;
         fetch('/add-row')
             .then(response => response.text())
             .then(() => {

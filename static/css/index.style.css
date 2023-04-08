@@ -101,6 +101,10 @@ h3 {
   margin-bottom: 20px;
 }
 
+.section{
+  text-align: center;
+}
+
 table {
   width: 100%;
   border-collapse: collapse;
@@ -193,9 +197,13 @@ input:checked + .slider:before {
 
 
 .users input:invalid {
-    border-color: red;
+  border-color: red;
 }
 
 .users input:required:valid {
-    border-color: green;
+  border-color: green;
+}
+
+.validation_error{
+  color: red;
 }

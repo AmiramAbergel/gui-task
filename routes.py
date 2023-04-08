@@ -9,14 +9,13 @@ page_one_classes, page_two_classes = classesShuffle()
 def router(app):
   @app.route('/', methods=['GET', 'POST'])
   def page_one():
-    flash('The app is running.')
+    flash('App is running.')
     config_data = read_yaml()
     form = PageForm(allowed_classes=page_one_classes)
     if request.method == 'POST' or form.validate_on_submit():
       form.process(request.form)
       file = request.files.get('report_background_image')
       if file:
-        
         return file_upload(file, form, app, config_data, 'page_two')
       else:
         form_data = form.data
@@ -76,11 +75,10 @@ def router(app):
   @app.route('/remove-row/<int:index>', methods=['GET', 'POST'])
   def remove_row(index):
     config_data = read_yaml()
-    if len(config_data['users']) > 1 <= index:
-      config_data['users'].pop(index)
-      write_yaml(config_data)
-
-    return ('', 204)
+    if len(config_data['users']) > 1 or index > 0:
+      return ('', 204)
+    else:
+      return ('', 400)
 
   @app.route('/add-row', methods=['GET', 'POST'])
   def add_row():

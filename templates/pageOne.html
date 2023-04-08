@@ -70,12 +70,11 @@
                 {{ form.report_background_image() }}<br />
                 <label for="report_background_image_path"></label>
                 <input type="text" id="report_background_image_path" class="form-control"
-                       value="{{ config.report_background_image.path if 'report_background_image' in config }}"
-                       readonly />
+                       value="{{ config.report_background_image.path if 'report_background_image' in config }}" />
               </div>
             {% elif class_name == 'hardware_acceleration' %}
               <div class="section">
-                <h3>Use hardware acceleration when available</h3>
+                <h3>Use hardware acceleration when available:</h3>
                 <label class="switch">
                   <input type="checkbox" name="{{ form.hardware_acceleration.name }}"
                     {% if config.hardware_acceleration %}checked{% endif %}/>

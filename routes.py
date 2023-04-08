@@ -1,4 +1,4 @@
-from flask import render_template, request, redirect, url_for
+from flask import render_template, request, redirect, url_for, flash
 
 from forms import PageForm
 from utils import read_yaml, write_yaml, file_upload, classesShuffle, tests_convert_to_dict
@@ -33,14 +33,19 @@ def router(app):
       form.process(request.form)
       file = request.files.get('report_background_image')
       if file:
-        return file_upload(file, form, app, config_data, 'page_two')
+        return file_upload(file, form, app, config_data, 'finishPage')
       else:
         form_data = form.data
         updated_form = tests_convert_to_dict(form_data)
         write_yaml(updated_form)
-        return redirect(url_for('page_one'))
+        return redirect(url_for('finishPage'))
     else:
       return render_template('pageTwo.html', form=form, config=config_data, page_two_classes=page_two_classes)
+
+  @app.route('/finishPage', methods=['GET'])
+  def finishPage():
+    flash('Finished successfully.')
+    return render_template('finishPage.html')
 
   @app.route('/check-all', methods=['GET', 'POST'])
   def check_all():

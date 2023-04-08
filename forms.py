@@ -6,12 +6,12 @@ from wtforms.validators import DataRequired, Email, ValidationError
 from utils import log_message
 
 
-def create_test_form(formData=None, **kwargs):
-  return TestForm(formData=formData, **kwargs)
+def create_test_form(formdata=None, **kwargs):
+  return TestForm(formData=formdata, **kwargs)
 
 
-def create_user_form(formData=None, **kwargs):
-  return UserForm(formData=formData, **kwargs)
+def create_user_form(formdata=None, **kwargs):
+  return UserForm(formData=formdata, **kwargs)
 
 
 def validate_users(field):
@@ -36,7 +36,7 @@ class PageForm(FlaskForm):
 
   mode = RadioField('Mode', name='mode', choices=[('debug', 'Debug'), ('production', 'Production')],
                     validators=[DataRequired()])
-  tests = FieldList(FormField(create_test_form), min_entries=10, max_entries=10,
+  tests = FieldList(FormField(create_test_form),name='tests', min_entries=10, max_entries=10,
                     validators=[DataRequired()])
   users = FieldList(FormField(create_user_form), name='users', min_entries=1, validators=[validate_users])
   report_background_image = FileField('Report Background Image',
@@ -45,13 +45,10 @@ class PageForm(FlaskForm):
 
 
 class TestForm(FlaskForm):
-  def __init__(self, *args, **kwargs):
-    super(TestForm, self).__init__(*args, **kwargs)
-    self.test_name.default = self.test_value.name 
-    self.process()
-
   test_value = BooleanField(label='Test Checkbox')
-  test_name = StringField()
+  test_name = StringField(name='test_name')
+
+
 
 
 class UserForm(FlaskForm):

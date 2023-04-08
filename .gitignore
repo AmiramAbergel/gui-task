@@ -42,6 +42,7 @@ build/Release
 # Dependency directories
 node_modules/
 config.yaml
+app.log
 
 
 # Dependency directories

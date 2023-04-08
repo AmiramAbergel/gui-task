@@ -11,9 +11,7 @@
               <div class="mode">
                 {{ form.mode.label }}<br />
                 {% for choice in form.mode.choices %}
-                  <input type="radio" id="{{ choice[0] }}" name="{{ form.mode.name }}" value="{{ choice[0] }}"
-                         {% if config.mode is defined and config.mode is not none
-                         and config.mode.lower() == choice[0] %}checked{% endif %}>
+                  <input type="radio" id="{{ choice[0] }}" name="{{ form.mode.name }}" value="{{ choice[0] }}" {% if config.mode is defined and config.mode is not none and config.mode.lower() == choice[0] %}checked{% endif %}/>
                   <label for="{{ choice[0] }}"></label> {{ choice[1] }}<br />
                 {% endfor %}
               </div>
@@ -21,12 +19,11 @@
               <div class="tests">
                 {{ form.tests.label }}<br />
                 {% for test_entry in form.tests %}
-                  <ul>
-                    <li>
-                      <input type="checkbox" id="{{ test_entry.id }}-tests" name="{{ test_entry.id }}-tests" value={{ test_entry.data.test_value }} {% if config.tests is defined and config.tests|length > loop.index0 and config.tests[loop.index0].value == true %}checked{% endif %}>
-                      <label for="{{ test_entry.id }}-tests"></label>Test {{loop.index}}<br />
-                    </li>
-                  </ul>
+                  <div class="tests-checkbox">
+                  {{ test_entry }}
+                  </div>
+                  <input type="checkbox" id="tests-{{ loop.index0 }}-test_value" name="tests-{{ loop.index0 }}-test_value" value="{{ test_entry.data.test_value }}" {% if config.tests is defined and config.tests|length > loop.index0 and config.tests[loop.index0].value == true %} checked {% endif %}/>
+                  <label for="tests-{{ loop.index0 }}-test_value"></label>Test {{loop.index}}<br />
                 {% endfor %}
                 <button class="btn" type="button" id="check-all" onclick="checkAll()"> Check All </button>
                 <button class="btn" type="button" id="uncheck-all" onclick="uncheckAll()"> Uncheck All </button>

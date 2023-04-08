@@ -18,12 +18,14 @@
                 {% endfor %}
               </div>
             {% elif class_name == 'tests' %}
-              <div class="tests">
+               <div class="tests">
                 {{ form.tests.label }}<br />
                 {% for test_entry in form.tests %}
-                  <input type="checkbox" id="test-{{ loop.index0 }}" name="tests" value="true" {% if config.tests is defined and config.tests|length > loop.index0 and config.tests[loop.index0].value == true %}checked{% endif %}>
-
-                  <label for="test-{{ loop.index0 }}"></label>Test {{loop.index}}<br />
+                  <div class="tests-checkbox">
+                  {{ test_entry }}
+                  </div>
+                  <input type="checkbox" id="tests-{{ loop.index0 }}-test_value" name="tests-{{ loop.index0 }}-test_value" value="{{ test_entry.data.test_value }}" {% if config.tests is defined and config.tests|length > loop.index0 and config.tests[loop.index0].value == true %} checked {% endif %}/>
+                  <label for="tests-{{ loop.index0 }}-test_value"></label>Test {{loop.index}}<br />
                 {% endfor %}
                 <button class="btn" type="button" id="check-all" onclick="checkAll()"> Check All </button>
                 <button class="btn" type="button" id="uncheck-all" onclick="uncheckAll()"> Uncheck All </button>

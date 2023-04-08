@@ -8,6 +8,7 @@ from utils import read_yaml, log_message
 
 
 class GUIApp:
+
   def __init__(self):
     self.app = Flask(__name__)
     self.app.secret_key = 'secret'
@@ -20,7 +21,6 @@ class GUIApp:
     routes.router(self.app)
     url = "http://127.0.0.1:5000"
     webbrowser.open_new(url)
-
     self.app.run(debug=False)
 
   def get_data(self):
@@ -29,10 +29,9 @@ class GUIApp:
 
 
 if __name__ == '__main__':
-  logger = logging.getLogger(__name__)
+  logging.basicConfig(filename='app.log', filemode='w', format='%(name)s - %(levelname)s - %(message)s')
+  log_message("Starting app.")
   gui_app = GUIApp()
   gui_app.run()
-  logger.info("The script started.")
-  log_message("The script started.")
   yaml_data = gui_app.get_data()
   print(yaml_data)

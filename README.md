@@ -49,8 +49,9 @@ This will launch the GUI in your default web browser, allowing you to interact w
 
 ## Screenshot
 
-![Screenshot 2023-04-02 212118](https://user-images.githubusercontent.com/39462161/229371432-0c484338-42a4-4fc1-9cbc-f01b6bf80125.png)
-![Screenshot 2023-04-02 212217](https://user-images.githubusercontent.com/39462161/229371472-9d4ae2c1-d3b7-47ce-81c6-5247b83f64f2.png)
+![Screenshot 2023-04-08 203032](https://user-images.githubusercontent.com/39462161/230735257-496f1562-1603-46b1-ab51-9db061d68c35.png)
+![Screenshot 2023-04-08 203207](https://user-images.githubusercontent.com/39462161/230735268-c8182aac-9ec2-4365-8440-f8182fa7d067.png)
+
 
 
 ## Video

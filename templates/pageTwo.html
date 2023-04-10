@@ -42,20 +42,27 @@
                     </tr>
                   </thead>
                   <tbody>
-                    {% for user_entry in form.users %}
+                    {% set users_length = config.users|length if 'users' in config else 1 %}
+                    {% for i in range(users_length) %}
                       {{ form.hidden_tag() }}
+                      <p>
+                      {{ config.users[i].user_type|string }}
+                      </p>
                       <tr>
                         <td>
-                          {{ user_entry.user_type(class="form-control",
-                          default=config.users[loop.index0].user_type if 'users' in config) }}
+                            <select id="users-{{ i }}-user_type" name="users-{{ i }}-user_type" class="form-control">
+                              {% for choice in form.users[0].user_type.choices %}
+                                <option id="{{ choice[0] }}" value="{{ choice[0] }}" {% if config.users[i].user_type|string == choice[0] %}selected{% endif %}>{{ choice[1] }}</option>
+                              {% endfor %}
+                            </select>
                         </td>
                         <td>
-                          {{ user_entry.email(
-                          class="form-control", value=config.users[loop.index0].email if 'users' in config) }}
+                          {{ form.users[0].email(
+                          class="form-control", value=config.users[i].email if 'users' in config) }}
                         </td>
                         <td>
-                          {{ user_entry.password(
-                          class="form-control", value=config.users[loop.index0].password if 'users' in config) }}
+                          {{ form.users[0].password(
+                          class="form-control", value=config.users[i].password if 'users' in config) }}
                         </td>
                         <td>
                           <button class="btn btn-danger" type="button" onclick="removeRow(this)">Remove</button>
@@ -69,9 +76,9 @@
             {% elif class_name == 'report_background_image' %}
               <div class="report">
                 {{ form.report_background_image.label }}<br />
-                {{ form.report_background_image() }}<br />
-                <label for="report_background_image_path"></label>
-                <input type="text" id="report_background_image_path" class="form-control"
+                {{ form.report_background_image(oninput="displayPath()") }}<br />
+                <label for="file-path"></label>
+                <input type="text" id='file-path' class="form-control"
                        value="{{ config.report_background_image.path if 'report_background_image' in config }}"
                        readonly />
               </div>

@@ -2,9 +2,7 @@ from flask_wtf import FlaskForm
 from flask_wtf.file import FileRequired, FileAllowed
 from wtforms import StringField, RadioField, SelectField, FileField, BooleanField, FieldList, FormField, PasswordField, \
   EmailField
-from wtforms.validators import DataRequired, Email, ValidationError
-
-from utils import log_message
+from wtforms.validators import DataRequired, Email
 
 
 def create_test_form(formdata=None, **kwargs):
@@ -15,12 +13,11 @@ def create_user_form(formdata=None, **kwargs):
   return UserForm(formData=formdata, **kwargs)
 
 
-def validate_users(field):
-  for user_entry in field.entries:
-    if not (user_entry.user_type.data and user_entry.email.data and user_entry.password.data):
-      log_message("You can't add a line if any cells in it are still empty.")
-      raise ValidationError("You can't add a line if any cells in it are still empty.")
-
+# def validate_file_path(form, field):
+#   if not os.path.exists(field.data) or not os.path.isfile(field.data):
+#     log_message("File path is not valid.")
+#     flash("File path is not valid.")
+#     raise ValidationError('Invalid file path.')
 
 class PageForm(FlaskForm):
   def __init__(self, allowed_classes=None, *args, **kwargs):
@@ -37,19 +34,18 @@ class PageForm(FlaskForm):
 
   mode = RadioField('Mode', name='mode', choices=[('debug', 'Debug'), ('production', 'Production')],
                     validators=[DataRequired()])
-  tests = FieldList(FormField(create_test_form),name='tests', min_entries=10, max_entries=10,
+  tests = FieldList(FormField(create_test_form), name='tests', min_entries=10, max_entries=10,
                     validators=[DataRequired()])
-  users = FieldList(FormField(create_user_form), name='users', min_entries=1, validators=[validate_users])
-  report_background_image = FileField('Report Background Image',
+  users = FieldList(FormField(create_user_form), name='users', min_entries=1)
+  report_background_image = FileField('Report Background Image', id='file-input',
                                       validators=[FileRequired(), FileAllowed(['jpg', 'png'], 'Images only!')])
+  file_path = StringField('File Path', id='file-path', validators=[])
   hardware_acceleration = BooleanField('Hardware Acceleration')
 
 
 class TestForm(FlaskForm):
   test_value = BooleanField(label='Test Checkbox')
   test_name = StringField(name='test_name')
-
-
 
 
 class UserForm(FlaskForm):

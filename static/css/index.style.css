@@ -207,3 +207,7 @@ input:checked + .slider:before {
 .validation_error{
   color: red;
 }
+
+.file-path{
+  background-color: tan;
+}

@@ -10,6 +10,16 @@
     <link rel="stylesheet" href="/static/css/index.style.css" />
     {% block css %}{% endblock %}
       <script>
+        function displayPath(){
+          const fileInput = document.getElementById('file-input');
+          const filePath = document.getElementById('file-path');
+          console.log(fileInput.files)
+          if (fileInput.files.length > 0) {
+            filePath.value = fileInput.value;
+          } else {
+            filePath.value = '';
+          }
+        }
         function checkAll(){
           fetch('/check-all')
             .then(response => response.text())
@@ -28,8 +38,9 @@
         }
 
         function removeRow(button) {
-          const row = button.parentNode.parentNode;
-          const index = Array.prototype.indexOf.call(row.parentNode.children, row);
+          const row = button.closest('tr');
+          const table = document.querySelector('.users table tbody');
+          const index = table.childElementCount;
           fetch(`/remove-row/${index}`)
             .then(response => {
               if (response.status === 204) {
@@ -39,25 +50,29 @@
         }
 
         function addRow() {
+        const newRow = document.createElement('tr');
+        const table = document.querySelector('.users table tbody');
+        const index = table.childElementCount;
         const invalidInputs = document.querySelectorAll('.users input:invalid');
-        if (invalidInputs.length > 0) return;
-        fetch('/add-row')
+        if (invalidInputs.length > 0) {
+            invalidInputs[0].focus();
+          return;
+        }
+        fetch(`/add-row/${index}`)
             .then(response => response.text())
             .then(() => {
-                const table = document.querySelector('.users table tbody');
-                const newRow = document.createElement('tr');
 
                 newRow.innerHTML = `
-                    <td><select class="form-control" name="users-__index__-user_type"><option value="Admin">Admin</option><option value="Standard" selected>Standard</option></select></td>
-                    <td><input class="form-control" name="users-__index__-email" type="email" required></td>
-                    <td><input class="form-control" name="users-__index__-password" type="password" required></td>
+                    <td><select class="form-control" name="users-${index}-user_type"><option value="admin">Admin</option><option value="standard" selected>Standard</option></select></td>
+                    <td><input class="form-control" name="users-${index}-email" type="email" required></td>
+                    <td><input class="form-control" name="users-${index}-password" type="password" required></td>
                     <td><button class="btn btn-danger" type="button" onclick="removeRow(this)">Remove</button></td>
                 `;
 
                 table.appendChild(newRow);
             });
-    }
-</script>
+        }
+      </script>
   </head>
   <body>
     <div class="container">

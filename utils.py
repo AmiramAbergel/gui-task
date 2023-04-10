@@ -65,7 +65,7 @@ def generate_random_config():
       {'name': 'Test 10', 'value': False}
     ],
     'users': [
-      {'user_type': 'Admin', 'email': '', 'password': ''}
+      {'user_type': 'admin', 'email': '', 'password': ''}
     ],
     'hardware_acceleration': True
   }
@@ -88,7 +88,6 @@ def file_upload(file, form, app, config_data, route_name):
       'filename': filename,
       'path': file_path
     }
-
   updated_form = tests_convert_to_dict(form.data)
   write_yaml(updated_form)
   log_message("Saved configuration for Page.")

@@ -57,7 +57,11 @@ This will launch the GUI in your default web browser, allowing you to interact w
 ## Video
 
 
-https://user-images.githubusercontent.com/39462161/229372739-1fd7d308-9db4-48ba-8a40-51f573695d50.mp4
+
+
+https://user-images.githubusercontent.com/39462161/230986059-4bfddda8-7570-49c1-9914-27d8d548701d.mp4
+
+
 
 
 

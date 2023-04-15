@@ -2,7 +2,7 @@ import os
 import random
 
 import yaml
-from flask import url_for, redirect
+from flask import url_for, redirect, request
 from werkzeug.utils import secure_filename
 from yaml.loader import FullLoader
 
@@ -98,3 +98,13 @@ def classes_shuffle():
   page_two_classes = classes[3:]
 
   return page_one_classes, page_two_classes
+
+def process_form(form, app, config_data, route_name):
+  form.process(request.form)
+  file = request.files.get('report_background_image')
+  if file:
+    return file_upload(file, form, app, config_data, route_name)
+  else:
+    updated_form = tests_convert_to_dict(form.data)
+    write_yaml(updated_form)
+    return redirect(url_for(route_name))

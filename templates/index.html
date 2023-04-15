@@ -13,7 +13,6 @@
         function displayPath(){
           const fileInput = document.getElementById('file-input');
           const filePath = document.getElementById('file-path');
-          console.log(fileInput.files)
           if (fileInput.files.length > 0) {
             filePath.value = fileInput.value;
           } else {

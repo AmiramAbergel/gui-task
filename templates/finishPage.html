@@ -1,7 +1,47 @@
 {% extends 'index.html' %}
 {% block title %}Finished successfully{% endblock %}
 {% block content %}
-  <h1></h1>
-  <p>Thank you for submit form.</p>
-  <p>YAML file ready for you inside root directory.</p>
+  <h1>Thank you for submit form</h1>
+  <h1>YAML file ready for you inside root directory.</h1>
+  <a href="{{ url_for('shutdown') }}" class="btn btn-end">Click here to terminate the application</a>
+  <h1>---------------------------------</h1>
+  <h2>Here is your configurations:</h2>
+  <br>
+  <p>Report background image:
+    <ul>
+      <li>Filename: {{ config['report_background_image'].filename }}</li>
+      <li>Path: {{ config['report_background_image'].path }}</li>
+    </ul>
+  </p>
+  <h1>----------------</h1>
+  <p>Mode:
+    <ul>
+      <li>{{ config['mode'] }}</li>
+    </ul>
+  </p>
+  <h1>----------------</h1>
+  <p>
+    Tests:
+    <ul>
+      {% for test in config['tests'] %}
+        <li>Name: {{ test.name }}, Value: {{ test.value }}</li>
+      {% endfor %}
+    </ul>
+  </p>
+  <h1>----------------</h1>
+  <p>
+  Users:
+    <ul>
+      {% for user in config['users'] %}
+        <li>Email: {{ user.email }}, Password: {{ user.password }}</li>
+      {% endfor %}
+    </ul>
+  </p>
+  <h1>----------------</h1>
+  <p> Hardware acceleration:
+    <ul>
+      <li>{{ config['hardware_acceleration'] }}</li>
+    </ul>
+  </p>
+
 {% endblock %}

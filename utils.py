@@ -99,6 +99,7 @@ def classes_shuffle():
 
   return page_one_classes, page_two_classes
 
+
 def process_form(form, app, config_data, route_name):
   form.process(request.form)
   file = request.files.get('report_background_image')
@@ -108,3 +109,10 @@ def process_form(form, app, config_data, route_name):
     updated_form = tests_convert_to_dict(form.data)
     write_yaml(updated_form)
     return redirect(url_for(route_name))
+
+
+def shutdown_server():
+  func = request.environ.get('werkzeug.server.shutdown')
+  if func is None:
+    raise RuntimeError('Not running with the Werkzeug Server')
+  func()

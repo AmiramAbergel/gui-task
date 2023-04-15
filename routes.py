@@ -1,7 +1,7 @@
 from flask import render_template, request, flash
 
 from forms import PageForm
-from utils import read_yaml, write_yaml, classes_shuffle, process_form
+from utils import read_yaml, write_yaml, classes_shuffle, process_form, shutdown_server
 
 page_one_classes, page_two_classes = classes_shuffle()
 
@@ -30,9 +30,16 @@ def router(app):
 
   @app.route('/finish-page', methods=['GET'])
   def finish_page():
+    config_data = read_yaml()
     flash('Finished successfully.')
 
-    return render_template('finishPage.html')
+    return render_template('finishPage.html', config=config_data)
+
+  @app.route('/shutdown', methods=['GET'])
+  def shutdown():
+    shutdown_server()
+
+    return 'Server shutting down...'
 
   @app.route('/check-all', methods=['GET', 'POST'])
   def check_all():

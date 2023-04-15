@@ -1,9 +1,9 @@
 from flask import render_template, request, redirect, url_for, flash
 
 from forms import PageForm
-from utils import read_yaml, write_yaml, file_upload, classesShuffle, tests_convert_to_dict
+from utils import read_yaml, write_yaml, file_upload, classes_shuffle, tests_convert_to_dict
 
-page_one_classes, page_two_classes = classesShuffle()
+page_one_classes, page_two_classes = classes_shuffle()
 
 
 def router(app):

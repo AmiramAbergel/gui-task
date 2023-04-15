@@ -43,9 +43,6 @@
                     {% set users_length = config.users|length if 'users' in config else 1 %}
                     {% for i in range(users_length) %}
                       {{ form.hidden_tag() }}
-                      <p>
-                      {{ config.users[i].user_type|string }}
-                      </p>
                       <tr>
                         <td>
                             <select id="users-{{ i }}-user_type" name="users-{{ i }}-user_type" class="form-control">

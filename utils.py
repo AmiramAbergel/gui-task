@@ -16,17 +16,21 @@ def read_yaml():
     with open(CONFIG_FILE, 'r') as yaml_file:
       try:
         data = yaml.load(yaml_file, Loader=FullLoader)
+
         return data
       except yaml.YAMLError as e:
         log_message("Error reading YAML file.")
         print(f"Error reading YAML file: {e}")
+
         return {}
 
 
 def write_yaml(data):
-  existing_data = read_yaml() or {}
+  if not os.path.exists(CONFIG_FILE):
+    existing_data = {}
+  else:
+    existing_data = read_yaml()
   existing_data.update(data)
-
   with open(CONFIG_FILE, 'w') as yaml_file:
     try:
       yaml.safe_dump(existing_data, yaml_file)
@@ -56,6 +60,7 @@ def generate_random_config():
     'hardware_acceleration': True
   }
   write_yaml(config_data)
+
   return config_data
 
 
@@ -66,17 +71,13 @@ def log_message(message):
 def file_upload(file, form, app, config_data, route_name):
   if file:
     filename = secure_filename(file.filename)
-    file.save(os.path.join(app.static_folder, 'report_background_image', filename))
-    file_path = os.path.join(
-      app.static_folder, 'report_background_image', filename
-    )
-    form.report_background_image.data = {
-      'filename': filename,
-      'path': file_path
-    }
+    file_path = os.path.join(app.static_folder, 'report_background_image', filename)
+    file.save(file_path)
+    form.report_background_image.data = {'filename': filename, 'path': file_path}
   updated_form = tests_convert_to_dict(form.data)
   write_yaml(updated_form)
   log_message("Saved configuration for Page.")
+
   return redirect(url_for(route_name))
 
 
@@ -84,19 +85,13 @@ def tests_convert_to_dict(form_data):
   tests_data = form_data.get('tests', [])
   if len(tests_data) == 0:
     return form_data
-
-  tests_list = [
-    {
-      'name': f"Test {index + 1}",
-      'value': item['test_value']
-    }
-    for index, item in enumerate(tests_data)
-  ]
+  tests_list = [{'name': f"Test {index + 1}", 'value': item['test_value']} for index, item in enumerate(tests_data)]
   form_data['tests'] = tests_list
+
   return form_data
 
 
-def classesShuffle():
+def classes_shuffle():
   classes = ['mode', 'tests', 'users', 'report_background_image', 'hardware_acceleration']
   random.shuffle(classes)
   page_one_classes = classes[:3]

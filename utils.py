@@ -24,29 +24,15 @@ def read_yaml():
 
 
 def write_yaml(data):
-  if os.path.exists(CONFIG_FILE):
-    with open(CONFIG_FILE, 'r') as yaml_file:
-      try:
-        existing_data = yaml.safe_load(yaml_file)
-        if existing_data is None:
-          existing_data = {}
-      except yaml.YAMLError as e:
-        log_message("Error reading YAML file.")
-        print(f"Error reading YAML file: {e}")
-        return {}
-  else:
-    existing_data = {}
-
+  existing_data = read_yaml() or {}
   existing_data.update(data)
 
   with open(CONFIG_FILE, 'w') as yaml_file:
     try:
       yaml.safe_dump(existing_data, yaml_file)
-
     except yaml.YAMLError as e:
       log_message("Error writing YAML file.")
       print(f"Error writing YAML file: {e}")
-      return {}
 
 
 def generate_random_config():

@@ -13,22 +13,12 @@ def create_user_form(formdata=None, **kwargs):
   return UserForm(formData=formdata, **kwargs)
 
 
-# def validate_file_path(form, field):
-#   if not os.path.exists(field.data) or not os.path.isfile(field.data):
-#     log_message("File path is not valid.")
-#     flash("File path is not valid.")
-#     raise ValidationError('Invalid file path.')
-
 class PageForm(FlaskForm):
   def __init__(self, allowed_classes=None, *args, **kwargs):
     super(PageForm, self).__init__(*args, **kwargs)
     self.allowed_classes = allowed_classes or []
 
-    fields_to_remove = []
-    for field_name, field_obj in self._fields.items():
-      if field_name not in self.allowed_classes:
-        fields_to_remove.append(field_name)
-
+    fields_to_remove = [field_name for field_name in self._fields if field_name not in self.allowed_classes]
     for field_name in fields_to_remove:
       del self._fields[field_name]
 

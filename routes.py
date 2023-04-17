@@ -6,7 +6,7 @@ from utils import read_yaml, write_yaml, classes_shuffle, process_form, shutdown
 page_one_classes, page_two_classes = classes_shuffle()
 
 
-def router(app):
+def router(app, gui_app, callback=None):
   @app.route('/', methods=['GET', 'POST'])
   def page_one():
     flash('App is running.')
@@ -37,7 +37,7 @@ def router(app):
 
   @app.route('/shutdown', methods=['GET'])
   def shutdown():
-    shutdown_server()
+    shutdown_server(gui_app,callback)
 
     return 'Server shutting down...'
 

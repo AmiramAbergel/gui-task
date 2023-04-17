@@ -71,15 +71,33 @@
                 table.appendChild(newRow);
             });
         }
+        function modifyMessages(message) {
+          const messageList = document.querySelector(".alert ul") ;
+          //messageList.innerHTML = '';
+          const newLi = document.createElement("li");
+          newLi.textContent = message;
+          messageList.appendChild(newLi);
+        }
       </script>
   </head>
   <body>
     <div class="container">
-      {% for message in get_flashed_messages() %}
-      <div class="alert">{{ message }}</div>
-      {% endfor %}
+      <div class="alert">
+        <h3>Logger</h3>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+            <ul>
+              {% for category, message in messages %}
+                <li>{{ message }}</li>
+              {% endfor %}
+            </ul>
+          {% endif %}
+        {% endwith %}
+      </div>
+      {% block content %}
+      {% endblock %}
 
-      {% block content %}{% endblock %}
     </div>
+
   </body>
 </html>

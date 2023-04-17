@@ -28,7 +28,7 @@ class PageForm(FlaskForm):
                     validators=[DataRequired()])
   users = FieldList(FormField(create_user_form), name='users', min_entries=1)
   report_background_image = FileField('Report Background Image', id='file-input',
-                                      validators=[FileRequired(), FileAllowed(['jpg', 'png'], 'Images only!')])
+                                      validators=[FileRequired(), FileAllowed(['jpg', 'png'], 'Only "jpg" and "png" files are allowed')])
   file_path = StringField('File Path', id='file-path', validators=[])
   hardware_acceleration = BooleanField('Hardware Acceleration')
 
@@ -40,5 +40,5 @@ class TestForm(FlaskForm):
 
 class UserForm(FlaskForm):
   user_type = SelectField('Type', choices=[('admin', 'Admin'), ('standard', 'Standard')], validators=[DataRequired()])
-  email = EmailField('Email', validators=[DataRequired(), Email()])
+  email = EmailField('Email', validators=[DataRequired(), Email(message='Invalid email address')]) #, render_kw={'pattern':'.+@globex\.com'}
   password = PasswordField('Password', validators=[DataRequired()])

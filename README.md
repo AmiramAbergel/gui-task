@@ -33,6 +33,22 @@ To run the application, navigate to the project directory and run the following 
     - python app.py
   
 This will launch the GUI in your default web browser, allowing you to interact with it and return data to your script.
+<br><br>
+ - This project can be used as an external library. Here's an example of how to import and run the app from another Python script:
+```
+from my_GUI_app import main
+
+def process_yaml_data(yaml_data):
+    print("YAML data received:")
+    print(yaml_data)
+
+if __name__ == "__main__":
+    main(callback=process_yaml_data)
+
+```
+Replace `my_gui_app` with the name of the directory containing app.py file of this project.
+ This is the directory that converted into a package by creating the `__init__.py` file. 
+When you import the package in another Python script, you can run the GUI app and process the YAML data after the app is closed.
 
 
 ## File Structure

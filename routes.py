@@ -64,8 +64,6 @@ def router(app, gui_app, callback=None):
     config_data = read_yaml()
 
     if len(config_data['users']) > 1 or index > 1:
-      print(index)
-      print(config_data['users'])
       config_data['users'].pop(index - 1)
       write_yaml(config_data)
       return ('', 204)

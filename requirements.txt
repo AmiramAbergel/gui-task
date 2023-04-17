@@ -6,3 +6,4 @@ WTForms
 Jinja2==3.0.0
 platformdirs
 email-validator
+pywebview

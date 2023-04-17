@@ -1,6 +1,7 @@
 import logging
-import webbrowser
+import threading
 
+import webview
 from flask import Flask
 
 import routes
@@ -24,16 +25,21 @@ class GUIApp:
 
     def run(self):
         self._register_routes()
-        self._open_browser()
+        self._start_flask_app_thread()
+        self._start_webview()
         self.app.run(debug=False)
 
     def _register_routes(self):
         routes.router(self.app)
 
-    @staticmethod
-    def _open_browser():
-        url = "http://127.0.0.1:5000"
-        webbrowser.open_new(url)
+    def _start_flask_app_thread(self):
+        flask_app_thread = threading.Thread(target=self.app.run, kwargs={'host': '127.0.0.1', 'port': 5000})
+        flask_app_thread.daemon = True
+        flask_app_thread.start()
+
+    def _start_webview(self):
+        webview.create_window("My Flask App", "http://127.0.0.1:5000", min_size=(800, 600))
+        webview.start()
 
     def get_data(self):
         yaml_data = read_yaml()

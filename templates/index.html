@@ -39,7 +39,7 @@
         function removeRow(button) {
           const row = button.closest('tr');
           const table = document.querySelector('.users table tbody');
-          const index = table.childElementCount;
+          const index = table.childElementCount - 1;
           fetch(`/remove-row/${index}`)
             .then(response => {
               if (response.status === 204) {
@@ -73,7 +73,6 @@
         }
         function modifyMessages(message) {
           const messageList = document.querySelector(".alert ul") ;
-          //messageList.innerHTML = '';
           const newLi = document.createElement("li");
           newLi.textContent = message;
           messageList.appendChild(newLi);

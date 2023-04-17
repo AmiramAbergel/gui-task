@@ -65,9 +65,9 @@
                       </td>
                     </tr>
                     <tr>
-                      {% if form.users[i].email.errors %}
+                      {% if form.users[0].email.errors %}
                         <div class="errors">
-                          {% for error in form.users[i].email.errors %}
+                          {% for error in form.users[0].email.errors %}
                             <p>{{ error }}</p>
                             <script>
                               modifyMessages("{{ error }}");

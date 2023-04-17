@@ -36,7 +36,7 @@ This will launch the GUI in your default web browser, allowing you to interact w
 <br><br>
  - This project can be used as an external library. Here's an example of how to import and run the app from another Python script:
 ```
-from my_GUI_app import main
+from my_gui_app import main
 
 def process_yaml_data(yaml_data):
     print("YAML data received:")

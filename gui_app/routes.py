@@ -1,12 +1,12 @@
 from flask import render_template, request, flash
 
-from forms import PageForm
-from utils import read_yaml, write_yaml, classes_shuffle, process_form, shutdown_server
+from gui_app.forms import PageForm
+from gui_app.utils import read_yaml, write_yaml, classes_shuffle, process_form, shutdown_server
 
 page_one_classes, page_two_classes = classes_shuffle()
 
 
-def router(app, gui_app, callback=None):
+def router(app, gui_app):
   @app.route('/', methods=['GET', 'POST'])
   def page_one():
     flash('App is running.')
@@ -37,7 +37,7 @@ def router(app, gui_app, callback=None):
 
   @app.route('/shutdown', methods=['GET'])
   def shutdown():
-    shutdown_server(gui_app,callback)
+    shutdown_server(gui_app)
 
     return 'Server shutting down...'
 

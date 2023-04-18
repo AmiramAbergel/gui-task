@@ -4,15 +4,16 @@ import threading
 import webview
 from flask import Flask
 
-import routes
-from utils import read_yaml, log_message
+from gui_app import routes
+from gui_app.utils import read_yaml, log_message
 
 
 class GUIApp:
 
-  def __init__(self):
+  def __init__(self,debug=False):
     self.app = self._initialize_app()
     self.app.secret_key = 'secret'
+    self.debug = debug
 
   @staticmethod
   def _initialize_app():
@@ -43,23 +44,21 @@ class GUIApp:
     self.window = webview.create_window('Frameless window', "http://127.0.0.1:5000", min_size=(800, 850),
                                         frameless=True)
     # by default, webview will start with debug=False
-    webview.start(debug=True)
+    webview.start(self.debug)
 
   @staticmethod
   def get_data():
     return read_yaml()
 
 
-def main():
+def main(debug=False):
   logging.basicConfig(
     filename='app.log',
     filemode='w',
     format='%(name)s - %(levelname)s - %(message)s',
   )
   log_message("Starting app.")
-  gui_app = GUIApp()
+  gui_app = GUIApp(debug)
   gui_app.run()
-
-
-if __name__ == '__main__':
-  main()
+  yaml_data = gui_app.get_data()
+  return yaml_data

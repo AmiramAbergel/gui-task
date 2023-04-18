@@ -10,7 +10,7 @@ from gui_app.utils import read_yaml, log_message
 
 class GUIApp:
 
-  def __init__(self,debug=False):
+  def __init__(self, debug=False):
     self.app = self._initialize_app()
     self.app.secret_key = 'secret'
     self.debug = debug
@@ -44,14 +44,14 @@ class GUIApp:
     self.window = webview.create_window('Frameless window', "http://127.0.0.1:5000", min_size=(800, 600),
                                         frameless=True)
     # by default, webview will start with debug=False
-    webview.start(self.debug)
+    webview.start(debug=self.debug)
 
   @staticmethod
   def get_data():
     return read_yaml()
 
 
-def main(debug=False):
+def main(debug):
   logging.basicConfig(
     filename='app.log',
     filemode='w',

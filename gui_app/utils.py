@@ -16,7 +16,6 @@ def read_yaml():
     with open(CONFIG_FILE, 'r') as yaml_file:
       try:
         data = yaml.load(yaml_file, Loader=FullLoader)
-
         return data
       except yaml.YAMLError as e:
         log_message("Error reading YAML file.")

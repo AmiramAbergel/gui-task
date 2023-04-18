@@ -48,12 +48,10 @@
             <label for="users-{{ i }}-user_type"></label>
             </td>
             <td>
-              {{ form.users[0].email(
-              class="form-control", value=config.users[i].email if 'users' in config) }}
+              <input type="email" name="users-{{ i }}-email" id="users-{{ i }}-email" class="form-control" value="{{ config.users[i].email if 'users' in config }}" required>
             </td>
             <td>
-              {{ form.users[0].password(
-              class="form-control", value=config.users[i].password if 'users' in config) }}
+              <input type="password" name="users-{{ i }}-password" id="users-{{ i }}-password" class="form-control" value="{{ config.users[i].password if 'users' in config }}" required>
             </td>
             <td>
               <button class="btn btn-danger" type="button" onclick="removeRow(this)">Remove</button>
@@ -63,14 +61,14 @@
       </tbody>
     </table>
     <button class="btn" type="button" id="addRowButton" onclick="addRow()">Add Row +</button>
-    {% if form.users[0].email.errors %}
+    {% set found_error = false %}
+    {% if form.users[0].email.errors and not found_error %}
+      {% set found_error = true %}
       <div class="errors">
-        {% for error in form.users[0].email.errors %}
-          <p>{{ error }}</p>
-          <script>
-            modifyMessages("{{ error }}");
-          </script>
-        {% endfor %}
+        <span class="mail-err">Error: There is an invalid email field on this form </span>
+        <script>
+          modifyMessages("Invalid email address");
+        </script>
       </div>
     {% endif %}
   </div>

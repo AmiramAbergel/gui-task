@@ -124,7 +124,7 @@ dist
 
 # Serverless directories
 .serverless/
-
+gui_app/static/report_background_image/.
 # FuseBox cache
 .fusebox/
 

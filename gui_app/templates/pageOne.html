@@ -3,7 +3,7 @@
 {% block content %}
   <h1>Page 1</h1>
   <p>Fill in the form below.</p>
-  <form method="post" enctype="multipart/form-data" action="/">
+  <form method="post" enctype="multipart/form-data" action="{{ url_for('page_one') }}">
     {% block form %}
       <div class="form-group">
         {% for class_name in page_one_classes %}

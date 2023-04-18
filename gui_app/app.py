@@ -40,16 +40,17 @@ class GUIApp:
     self.window.destroy()
 
   def _start_webview(self):
-    self.window = webview.create_window('Frameless window', "http://127.0.0.1:5000", min_size=(800, 850), frameless=True)
+    self.window = webview.create_window('Frameless window', "http://127.0.0.1:5000", min_size=(800, 850),
+                                        frameless=True)
     # by default, webview will start with debug=False
-    webview.start(debug=False)
+    webview.start(debug=True)
 
   @staticmethod
   def get_data():
     return read_yaml()
 
 
-def main(callback=None):
+def main():
   logging.basicConfig(
     filename='app.log',
     filemode='w',
@@ -58,9 +59,6 @@ def main(callback=None):
   log_message("Starting app.")
   gui_app = GUIApp()
   gui_app.run()
-  if callback:
-    yaml_data = gui_app.get_data()
-    callback(yaml_data)
 
 
 if __name__ == '__main__':

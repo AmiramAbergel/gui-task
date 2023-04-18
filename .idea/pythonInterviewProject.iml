@@ -15,7 +15,7 @@
   <component name="PyNamespacePackagesService">
     <option name="namespacePackageFolders">
       <list>
-        <option value="$MODULE_DIR$/tests" />
+        <option value="$MODULE_DIR$/gui_app/tests" />
       </list>
     </option>
   </component>
@@ -23,7 +23,7 @@
     <option name="TEMPLATE_CONFIGURATION" value="Jinja2" />
     <option name="TEMPLATE_FOLDERS">
       <list>
-        <option value="$MODULE_DIR$/../pythonInterviewProject\templates" />
+        <option value="$MODULE_DIR$/gui_app/templates" />
       </list>
     </option>
   </component>

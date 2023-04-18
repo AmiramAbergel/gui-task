@@ -1,7 +1,7 @@
 import unittest
 
-import routes
-from app import GUIApp
+from gui_app import routes
+from gui_app.app import GUIApp
 
 
 class TestGUIApp(unittest.TestCase):

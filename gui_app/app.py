@@ -41,7 +41,7 @@ class GUIApp:
     self.window.destroy()
 
   def _start_webview(self):
-    self.window = webview.create_window('Frameless window', "http://127.0.0.1:5000", min_size=(800, 850),
+    self.window = webview.create_window('Frameless window', "http://127.0.0.1:5000", min_size=(800, 600),
                                         frameless=True)
     # by default, webview will start with debug=False
     webview.start(self.debug)

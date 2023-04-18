@@ -59,22 +59,20 @@
               <button class="btn btn-danger" type="button" onclick="removeRow(this)">Remove</button>
             </td>
           </tr>
-          <tr>
-            {% if form.users[0].email.errors %}
-              <div class="errors">
-                {% for error in form.users[0].email.errors %}
-                  <p>{{ error }}</p>
-                  <script>
-                    modifyMessages("{{ error }}");
-                  </script>
-                {% endfor %}
-              </div>
-            {% endif %}
-          </tr>
         {% endfor %}
       </tbody>
     </table>
     <button class="btn" type="button" id="addRowButton" onclick="addRow()">Add Row +</button>
+    {% if form.users[0].email.errors %}
+      <div class="errors">
+        {% for error in form.users[0].email.errors %}
+          <p>{{ error }}</p>
+          <script>
+            modifyMessages("{{ error }}");
+          </script>
+        {% endfor %}
+      </div>
+    {% endif %}
   </div>
 {% endmacro %}
 

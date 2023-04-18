@@ -29,7 +29,7 @@ function uncheckAll(){
 function removeRow(button) {
   const row = button.closest('tr');
   const table = document.querySelector('.users table tbody');
-  const index = table.childElementCount - 1;
+  const index = table.childElementCount;
   fetch(`/remove-row/${index}`)
     .then(response => {
       if (response.status === 204) {

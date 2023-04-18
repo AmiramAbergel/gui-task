@@ -62,8 +62,9 @@ def router(app, gui_app, callback=None):
   @app.route('/remove-row/<int:index>', methods=['GET', 'POST'])
   def remove_row(index):
     config_data = read_yaml()
-
     if len(config_data['users']) > 1 or index > 1:
+      print('index',index)
+      print(len(config_data['users']))
       config_data['users'].pop(index - 1)
       write_yaml(config_data)
       return ('', 204)
@@ -73,6 +74,8 @@ def router(app, gui_app, callback=None):
   @app.route('/add-row/<int:index>', methods=['GET', 'POST'])
   def add_row(index):
     config_data = read_yaml()
+    print('index', index)
+    print(len(config_data['users']))
     new_user = {'user_type': 'admin', 'email': '', 'password': ''}
     config_data['users'].insert(index, new_user)
     write_yaml(config_data)

@@ -27,7 +27,6 @@ class GUIApp:
     self._register_routes()
     self._start_flask_app_thread()
     self._start_webview()
-    self.app.run(debug=False)
 
   def _register_routes(self):
     routes.router(self.app, self)
@@ -36,7 +35,6 @@ class GUIApp:
     flask_app_thread = threading.Thread(target=self.app.run, kwargs={'host': '127.0.0.1', 'port': 5000})
     flask_app_thread.daemon = True
     flask_app_thread.start()
-    self.flask_app_thread = flask_app_thread
 
   def destroy(self):
     self.window.destroy()
@@ -48,8 +46,7 @@ class GUIApp:
 
   @staticmethod
   def get_data():
-    yaml_data = read_yaml()
-    return yaml_data
+    return read_yaml()
 
 
 def main(callback=None):

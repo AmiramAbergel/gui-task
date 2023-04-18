@@ -1,112 +1,22 @@
 {% extends 'index.html' %} {% block title %}Page 1{% endblock %}
+{% from 'sharedFormElements.html' import mode_field, tests_field, users_field, report_background_image_field, hardware_acceleration_field %}
 {% block content %}
   <h1>Page 1</h1>
   <p>Fill in the form below.</p>
   <form method="post" enctype="multipart/form-data" action="/">
     {% block form %}
       <div class="form-group">
-
         {% for class_name in page_one_classes %}
           {% if class_name == 'mode' %}
-            <div class="mode">
-              {{ form.mode.label }}<br />
-              {% for choice in form.mode.choices %}
-                <input type="radio" id="{{ choice[0] }}" name="{{ form.mode.name }}" value="{{ choice[0] }}" {% if config.mode is defined and config.mode is not none and config.mode.lower() == choice[0] %}checked{% endif %}/>
-                <label for="{{ choice[0] }}"></label> {{ choice[1] }}<br />
-              {% endfor %}
-            </div>
+            {{ mode_field(form, config) }}
           {% elif class_name == 'tests' %}
-            <div class="tests">
-              {{ form.tests.label }}<br />
-              {% for test_entry in form.tests %}
-                <div class="tests-checkbox">
-                  {{ test_entry }}
-                </div>
-                <input type="checkbox" id="tests-{{ loop.index0 }}-test_value" name="tests-{{ loop.index0 }}-test_value" value="{{ test_entry.data.test_value }}" {% if config.tests is defined and config.tests|length > loop.index0 and config.tests[loop.index0].value == true %} checked {% endif %}/>
-                <label for="tests-{{ loop.index0 }}-test_value"></label>Test {{loop.index}}<br />
-              {% endfor %}
-              <button class="btn" type="button" id="check-all" onclick="checkAll()"> Check All </button>
-              <button class="btn" type="button" id="uncheck-all" onclick="uncheckAll()"> Uncheck All </button>
-            </div>
+            {{ tests_field(form, config) }}
           {% elif class_name == 'users' %}
-            <div class="users">
-              <table>
-                <thead>
-                  <tr>
-                    <th>Type</th>
-                    <th>Email</th>
-                    <th>Password</th>
-                    <th>Remove</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {% set users_length = config.users|length if 'users' in config else 1 %}
-                  {% for i in range(users_length) %}
-                    {{ form.hidden_tag() }}
-                    <tr>
-                      <td>
-                        <select id="users-{{ i }}-user_type" name="users-{{ i }}-user_type" class="form-control">
-                          {% for choice in form.users[0].user_type.choices %}
-                            <option id="{{ choice[0] }}" value="{{ choice[0] }}" {% if config.users[i].user_type|string == choice[0] %}selected{% endif %}>{{ choice[1] }}</option>
-                          {% endfor %}
-                        </select>
-                      <label for="users-{{ i }}-user_type"></label>
-                      </td>
-                      <td>
-                        {{ form.users[0].email(
-                        class="form-control", value=config.users[i].email if 'users' in config) }}
-                      </td>
-                      <td>
-                        {{ form.users[0].password(
-                        class="form-control", value=config.users[i].password if 'users' in config) }}
-                      </td>
-                      <td>
-                        <button class="btn btn-danger" type="button" onclick="removeRow(this)">Remove</button>
-                      </td>
-                    </tr>
-                    <tr>
-                      {% if form.users[0].email.errors %}
-                        <div class="errors">
-                          {% for error in form.users[0].email.errors %}
-                            <p>{{ error }}</p>
-                            <script>
-                              modifyMessages("{{ error }}");
-                            </script>
-                          {% endfor %}
-                        </div>
-                      {% endif %}
-                    </tr>
-                  {% endfor %}
-                </tbody>
-              </table>
-            <button class="btn" type="button" id="addRowButton" onclick="addRow()">Add Row +</button>
-            </div>
+            {{ users_field(form, config) }}
           {% elif class_name == 'report_background_image' %}
-            <div class="report">
-              {% if form.report_background_image.errors %}
-                <div class="errors">
-                  {% for error in form.report_background_image.errors %}
-                    <p>{{ error }}</p>
-                    <script>
-                      modifyMessages("{{ error }}");
-                    </script>
-                  {% endfor %}
-                </div>
-              {% endif %}
-              {{ form.report_background_image.label }}<br />
-              {{ form.report_background_image(oninput="displayPath()") }}<br />
-              <label for="file-path"></label>
-              <input type="text" id='file-path' class="form-control" value="{{ config.report_background_image.path if 'report_background_image' in config }}" />
-            </div>
+            {{ report_background_image_field(form, config) }}
           {% elif class_name == 'hardware_acceleration' %}
-            <div class="section">
-              <h3>Use hardware acceleration when available:</h3>
-              <label class="switch">
-                <input type="checkbox" name="{{ form.hardware_acceleration.name }}"
-                  {% if config.hardware_acceleration %}checked{% endif %}/>
-                <span class="slider"></span>
-              </label>
-            </div>
+            {{ hardware_acceleration_field(form, config) }}
           {% endif %}
         {% endfor %}
       </div>

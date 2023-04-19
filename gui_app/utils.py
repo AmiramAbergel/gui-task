@@ -18,9 +18,6 @@ def read_yaml():
         data = yaml.load(yaml_file, Loader=FullLoader)
         return data
       except yaml.YAMLError as e:
-        log_message("Error reading YAML file.")
-        print(f"Error reading YAML file: {e}")
-
         return {}
 
 
@@ -34,8 +31,8 @@ def write_yaml(data):
     try:
       yaml.safe_dump(existing_data, yaml_file)
     except yaml.YAMLError as e:
-      log_message("Error writing YAML file.")
-      print(f"Error writing YAML file: {e}")
+      return {}
+
 
 
 def generate_random_config():
@@ -63,10 +60,6 @@ def generate_random_config():
   return config_data
 
 
-def log_message(message):
-  print(message)
-
-
 def file_upload(file, form, app, config_data, route_name):
   if file:
     filename = secure_filename(file.filename)
@@ -75,7 +68,6 @@ def file_upload(file, form, app, config_data, route_name):
     form.report_background_image.data = {'filename': filename, 'path': file_path}
   updated_form = tests_convert_to_dict(form.data)
   write_yaml(updated_form)
-  log_message("Saved configuration for Page.")
 
   return redirect(url_for(route_name))
 

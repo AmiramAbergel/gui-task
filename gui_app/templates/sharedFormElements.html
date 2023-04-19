@@ -1,5 +1,5 @@
 {% macro mode_field(form, config) %}
-  <div class="mode">
+  <div class="mode pywebview-drag-region">
     {{ form.mode.label }}<br />
     {% for choice in form.mode.choices %}
       <input type="radio" id="{{ choice[0] }}" name="{{ form.mode.name }}" value="{{ choice[0] }}" {% if config.mode is defined and config.mode is not none and config.mode.lower() == choice[0] %}checked{% endif %}/>
@@ -9,7 +9,7 @@
 {% endmacro %}
 
 {% macro tests_field(form, config) %}
-  <div class="tests">
+  <div class="tests pywebview-drag-region">
     {{ form.tests.label }}<br />
     {% for test_entry in form.tests %}
       <div class="tests-checkbox">
@@ -65,7 +65,7 @@
     {% if form.users[0].email.errors and not found_error %}
       {% set found_error = true %}
       <div class="errors">
-        <span class="mail-err">Error: There is an invalid email field on this form </span>
+        <span class="mail-err">Error: There is an invalid email and/or email is already in use </span>
         <script>
           modifyMessages("Invalid email address");
         </script>
@@ -89,7 +89,7 @@
     {{ form.report_background_image.label }}<br />
     {{ form.report_background_image(oninput="displayPath()") }}<br />
     <label for="file-path"></label>
-    <input type="text" id='file-path' class="form-control" value="{{ config.report_background_image.path if 'report_background_image' in config }}" />
+    <input type="text" id='file-path' class="form-control" value="{{ config.report_background_image.path if 'report_background_image' in config }}" required />
   </div>
 {% endmacro %}
 

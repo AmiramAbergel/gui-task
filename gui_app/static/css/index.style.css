@@ -221,3 +221,9 @@ input:checked + .slider:before {
     color: red;
     font-size: 15px;
 }
+
+.finish-arrow{
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}

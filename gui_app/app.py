@@ -1,11 +1,12 @@
 import logging
+import os
 import threading
 
 import webview
 from flask import Flask
 
 from gui_app import routes
-from gui_app.utils import read_yaml, log_message
+from gui_app.utils import read_yaml
 
 
 class GUIApp:
@@ -56,8 +57,11 @@ def main(debug):
     filename='app.log',
     filemode='w',
     format='%(name)s - %(levelname)s - %(message)s',
+    level=logging.ERROR
   )
-  log_message("Starting app.")
+  if debug == False:
+    logging.getLogger('werkzeug').disabled = True
+    os.environ['WERKZEUG_RUN_MAIN'] = 'true'
   gui_app = GUIApp(debug)
   gui_app.run()
   yaml_data = gui_app.get_data()

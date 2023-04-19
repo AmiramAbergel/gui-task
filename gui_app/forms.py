@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from flask_wtf.file import FileRequired, FileAllowed
+from flask_wtf.file import FileAllowed
 from wtforms import StringField, RadioField, SelectField, FileField, BooleanField, FieldList, FormField, PasswordField, \
   EmailField
 from wtforms.validators import DataRequired, Email
@@ -28,7 +28,7 @@ class PageForm(FlaskForm):
                     validators=[DataRequired()])
   users = FieldList(FormField(create_user_form), name='users', min_entries=1)
   report_background_image = FileField('Report Background Image', id='file-input',
-                                      validators=[FileRequired(), FileAllowed(['jpeg', 'jpg', 'png'], 'Only JPG/JPEG/PNG files are allowed')], render_kw={'accept':'.png, .jpg, .jpeg'})
+                                      validators=[FileAllowed(['jpeg', 'jpg', 'png'], 'Only JPG/JPEG/PNG files are allowed')], render_kw={'accept':'.png, .jpg, .jpeg'})
   file_path = StringField('File Path', id='file-path', validators=[])
   hardware_acceleration = BooleanField('Hardware Acceleration')
 

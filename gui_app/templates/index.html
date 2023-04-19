@@ -13,7 +13,9 @@
   </head>
   <body>
     <div class="container ">
-      <div class="alert pywebview-drag-region">
+      {% block content %}
+      {% endblock %}
+    <div class="alert pywebview-drag-region">
         <h3>Logger</h3>
         {% with messages = get_flashed_messages(with_categories=true) %}
           {% if messages %}
@@ -25,8 +27,6 @@
           {% endif %}
         {% endwith %}
       </div>
-      {% block content %}
-      {% endblock %}
     </div>
 
   </body>

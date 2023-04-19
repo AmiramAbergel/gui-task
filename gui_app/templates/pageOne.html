@@ -1,8 +1,8 @@
 {% extends 'index.html' %} {% block title %}Page 1{% endblock %}
 {% from 'sharedFormElements.html' import mode_field, tests_field, users_field, report_background_image_field, hardware_acceleration_field %}
 {% block content %}
-  <h1>Page 1</h1>
-  <p>Fill in the form below.</p>
+  <h1 class="pywebview-drag-region">Page 1</h1>
+  <p class="pywebview-drag-region">Fill in the form below.</p>
   <form method="post" enctype="multipart/form-data" action="{{ url_for('page_one') }}">
     {% block form %}
       <div class="form-group">

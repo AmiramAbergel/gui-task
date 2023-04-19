@@ -28,39 +28,31 @@ You can also upload a new report background image, and you can also select which
   
 ## Usage
 
-To run the application, navigate to the project directory and run the following command:
+To run the application, navigate to the project directory where this Readme file is located and run the following command:
   
-    - python app.py
+    - python script.py
   
-This will launch the GUI in your default web browser, allowing you to interact with it and return data to your script.
-<br><br>
- - This project can be used as an external library. Here's an example of how to import and run the app from another Python script:
-```
-from my_gui_app import main
-
-def process_yaml_data(yaml_data):
-    print("YAML data received:")
-    print(yaml_data)
-
-if __name__ == "__main__":
-    main(callback=process_yaml_data)
-
-```
-Replace `my_gui_app` with the name of the directory containing app.py file of this project.
- This is the directory that converted into a package by creating the `__init__.py` file. 
-When you import the package in another Python script, you can run the GUI app and process the YAML data after the app is closed.
-
 
 ## File Structure
-
-- `app.py`: The main script that initializes the application and launches the GUI.
-- `routes.py`: This file contains the route functions that handle HTTP requests to different URLs within the application.
-- `forms.py`: This file contains the form classes used in the application, including PageOneForm, PageTwoForm, and UserForm.
-- `utils.py`: This file contains utility functions for reading and writing the YAML configuration file, generating a random configuration, validating email, and logging messages.
-- `index.html`: This is the base HTML template that other templates extend.
-- `pageOne.html`: This is the HTML template for Page 1 of the application, which includes the form for configuring settings on Page 1.
-- `pageTwo.html`: This is the HTML template for Page 2 of the application, which includes the form for configuring settings on Page 2.
-- `index.style.css`:  This is a CSS-style file used by index.html. It  contains instructions for how index.html elements should be displayed on the page.
+- `script.py`: This is the main script that runs the application.
+- `gui_app`: Main folder containing the GUI application.
+  - `static`: Folder containing static files such as CSS and JavaScript.
+    - `css`: Folder containing CSS files.
+      - `index.style.css`:  This is a CSS-style file used by index.html. It  contains instructions for how index.html elements should be displayed on the page.
+    - `js`: Folder containing JavaScript files.
+      - `script.js`: This is a JavaScript file used by index.html. It contains instructions for how index.html elements should be displayed on the page.
+  - `templates`: Folder containing HTML templates.
+    - `index.html`: This is the base HTML template that other templates extend.
+    - `pageOne.html`: This is the HTML template for Page 1 of the application, which includes the form for configuring settings on Page 1.
+    - `pageTwo.html`: This is the HTML template for Page 2 of the application, which includes the form for configuring settings on Page 2.
+    - `sharedFormElements.html`: This is the HTML template for the shared form elements between Page 1 and Page 2.
+    - `finishPage.html`: This is the HTML template for the finish page, which is displayed after the user clicks the "Finish" button.
+  - `tests`: Folder containing test files.
+      - `test.py`: This is a test file that contains a test function that tests the application.
+  - `app.py`: This file contains the GUI application object and the main function that runs the application.
+  - `routes.py`: This file contains the route functions that handle HTTP requests to different URLs within the application.
+  - `forms.py`: This file contains the form classes used in the application, including PageOneForm, PageTwoForm, and UserForm.
+  - `utils.py`: This file contains utility functions for reading and writing the YAML configuration file, generating a random configuration, validating email, and logging messages.
 
 
 ## Screenshot
@@ -71,13 +63,5 @@ When you import the package in another Python script, you can run the GUI app an
 
 
 ## Video
-
-
-
-
-https://user-images.githubusercontent.com/39462161/230986059-4bfddda8-7570-49c1-9914-27d8d548701d.mp4
-
-
-
 
 

@@ -62,15 +62,17 @@
     </table>
     <button class="btn" type="button" id="addRowButton" onclick="addRow()">Add Row +</button>
     {% set found_error = false %}
-    {% if form.users[0].email.errors and not found_error %}
-      {% set found_error = true %}
-      <div class="errors">
-        <span class="mail-err">Error: There is an invalid email and/or email is already in use </span>
-        <script>
-          modifyMessages("Invalid email address");
-        </script>
-      </div>
-    {% endif %}
+{% for user_form in form.users %}
+  {% if user_form.email.errors and not found_error %}
+    {% set found_error = true %}
+    <div class="errors">
+      <span class="mail-err">Error: There is an invalid email and/or email is already in use </span>
+      <script>
+        modifyMessages("Invalid email address");
+      </script>
+    </div>
+  {% endif %}
+{% endfor %}
   </div>
 {% endmacro %}
 

@@ -1,8 +1,10 @@
+from collections import Counter
+
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileAllowed
 from wtforms import StringField, RadioField, SelectField, FileField, BooleanField, FieldList, FormField, PasswordField, \
   EmailField
-from wtforms.validators import DataRequired, Email
+from wtforms.validators import DataRequired, Email, ValidationError
 
 
 def create_test_form(formdata=None, **kwargs):
@@ -11,6 +13,19 @@ def create_test_form(formdata=None, **kwargs):
 
 def create_user_form(formdata=None, **kwargs):
   return UserForm(formData=formdata, **kwargs)
+
+
+def check_duplicate_emails(form, field):
+  emails = [user_form.email.data for user_form in form.users.entries]
+  email_counts = Counter(emails)
+
+  duplicates = [email for email, count in email_counts.items() if count > 1]
+  if duplicates:
+    for user_form in form.users.entries:
+      if user_form.email.data in duplicates:
+        user_form.email.errors.append("Duplicate email detected")
+        duplicates.remove(user_form.email.data)
+    raise ValidationError("Duplicate email detected")
 
 
 class PageForm(FlaskForm):
@@ -26,7 +41,7 @@ class PageForm(FlaskForm):
                     validators=[DataRequired()])
   tests = FieldList(FormField(create_test_form), name='tests', min_entries=10, max_entries=10,
                     validators=[DataRequired()])
-  users = FieldList(FormField(create_user_form), name='users', min_entries=1)
+  users = FieldList(FormField(create_user_form), name='users', min_entries=1,validators=[check_duplicate_emails])
   report_background_image = FileField('Report Background Image', id='file-input',
                                       validators=[FileAllowed(['jpeg', 'jpg', 'png'], 'Only JPG/JPEG/PNG files are allowed')], render_kw={'accept':'.png, .jpg, .jpeg'})
   file_path = StringField('File Path', id='file-path', validators=[])

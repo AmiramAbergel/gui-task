@@ -1,29 +1,20 @@
 function displayPath() {
   const fileInput = document.getElementById('file-input');
   const filePath = document.getElementById('file-path');
-  if (fileInput.files.length > 0) {
-    filePath.value = fileInput.value;
-  } else {
-    filePath.value = '';
-  }
+  filePath.value = fileInput.files.length > 0 ? fileInput.value : '';
 }
 
-function checkAll(){
-  fetch('/check-all')
-    .then(response => response.text())
-    .then(text => {
-      const checkboxes = document.querySelectorAll('.tests input[type="checkbox"]');
-      checkboxes.forEach(checkbox => checkbox.checked = true);
-    });
+function toggleAllCheckboxes(checked) {
+  const checkboxes = document.querySelectorAll('.tests input[type="checkbox"]');
+  checkboxes.forEach(checkbox => checkbox.checked = checked);
 }
 
-function uncheckAll(){
-  fetch('/uncheck-all')
-    .then(response => response.text())
-    .then(text => {
-      const checkboxes = document.querySelectorAll('.tests input[type="checkbox"]');
-      checkboxes.forEach(checkbox => checkbox.checked = false);
-    });
+function checkAll() {
+  toggleAllCheckboxes(true);
+}
+
+function uncheckAll() {
+  toggleAllCheckboxes(false);
 }
 
 function removeRow(button) {

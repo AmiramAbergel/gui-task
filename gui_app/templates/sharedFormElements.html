@@ -91,12 +91,12 @@
     {{ form.report_background_image.label }}<br />
     {{ form.report_background_image(oninput="displayPath()") }}<br />
     <label for="file-path"></label>
-    <input type="text" id='file-path' class="form-control" value="{{ config.report_background_image.path if 'report_background_image' in config }}" required />
+    {{ form.file_path(value = config.report_background_image.path if 'report_background_image' in config ) }}
   </div>
 {% endmacro %}
 
 {% macro hardware_acceleration_field(form, config) %}
-  <div class="section">
+  <div class="section pywebview-drag-region">
     <h3>Use hardware acceleration when available:</h3>
     <label class="switch">
       <input type="checkbox" name="{{ form.hardware_acceleration.name }}"

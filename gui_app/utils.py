@@ -34,7 +34,6 @@ def write_yaml(data):
       return {}
 
 
-
 def generate_random_config():
   config_data = {
     'mode': 'debug',
@@ -60,7 +59,7 @@ def generate_random_config():
   return config_data
 
 
-def file_upload(file, form, app, config_data, route_name):
+def file_upload(file, form, app, route_name):
   if file:
     filename = secure_filename(file.filename)
     file_path = os.path.join(app.static_folder, 'report_background_image', filename)
@@ -91,12 +90,17 @@ def classes_shuffle():
   return page_one_classes, page_two_classes
 
 
-def process_form(form, app, config_data, route_name):
+def process_form(form, app, route_name, config_data=None):
   form.process(request.form)
   file = request.files.get('report_background_image')
+
   if file:
-    return file_upload(file, form, app, config_data, route_name)
+    return file_upload(file, form, app, route_name)
   else:
+    if config_data and 'report_background_image' in config_data:
+      report_bg_image = config_data['report_background_image']
+      if report_bg_image and 'path' in report_bg_image and 'filename' in report_bg_image:
+        form.report_background_image.data = {'filename': report_bg_image['filename'], 'path': report_bg_image['path']}
     updated_form = tests_convert_to_dict(form.data)
     write_yaml(updated_form)
     return redirect(url_for(route_name))

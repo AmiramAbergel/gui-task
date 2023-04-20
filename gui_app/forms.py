@@ -35,16 +35,21 @@ class PageForm(FlaskForm):
 
     fields_to_remove = [field_name for field_name in self._fields if field_name not in self.allowed_classes]
     for field_name in fields_to_remove:
-      del self._fields[field_name]
+      if field_name == 'file_path':
+        self._fields[field_name].data = ''
+      else:
+        del self._fields[field_name]
 
   mode = RadioField('Mode', name='mode', choices=[('debug', 'Debug'), ('production', 'Production')],
                     validators=[DataRequired()])
   tests = FieldList(FormField(create_test_form), name='tests', min_entries=10, max_entries=10,
                     validators=[DataRequired()])
-  users = FieldList(FormField(create_user_form), name='users', min_entries=1,validators=[check_duplicate_emails])
+  users = FieldList(FormField(create_user_form), name='users', min_entries=1, validators=[check_duplicate_emails])
   report_background_image = FileField('Report Background Image', id='file-input',
-                                      validators=[FileAllowed(['jpeg', 'jpg', 'png'], 'Only JPG/JPEG/PNG files are allowed')], render_kw={'accept':'.png, .jpg, .jpeg'})
-  file_path = StringField('File Path', id='file-path', validators=[])
+                                      validators=[
+                                        FileAllowed(['jpeg', 'jpg', 'png'], 'Only JPG/JPEG/PNG files are allowed')],
+                                      render_kw={'accept': '.png, .jpg, .jpeg'})
+  file_path = StringField('File Path', id='file-path', validators=[], render_kw={"class": "form-control", "required": ""})
   hardware_acceleration = BooleanField('Hardware Acceleration')
 
 
@@ -55,5 +60,5 @@ class TestForm(FlaskForm):
 
 class UserForm(FlaskForm):
   user_type = SelectField('Type', choices=[('admin', 'Admin'), ('standard', 'Standard')], validators=[DataRequired()])
-  email = EmailField('Email', validators=[DataRequired(), Email(message='Invalid email address')]) #, render_kw={'pattern':'.+@globex\.com'}
+  email = EmailField('Email', validators=[DataRequired(), Email(message='Invalid email address')])
   password = PasswordField('Password', validators=[DataRequired()])

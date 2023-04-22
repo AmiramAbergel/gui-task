@@ -108,11 +108,3 @@ def process_form(form, app, route_name, config_data=None):
 
   return redirect(url_for(route_name))
 
-
-def shutdown_server(gui_app):
-  func = request.environ.get('werkzeug.server.shutdown')
-  if func is None:
-    raise RuntimeError('Not running with the Werkzeug Server')
-  func()
-  gui_app.destroy()
-  return

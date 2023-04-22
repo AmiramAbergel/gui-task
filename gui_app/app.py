@@ -38,11 +38,11 @@ class GUIApp:
     flask_app_thread.start()
 
   def destroy(self):
-    self.window.destroy()
+    return self.window.destroy()
 
   def _start_webview(self):
     self.window = webview.create_window('Frameless window', 'http://127.0.0.1:5000', min_size=(800, 600),
-                                        frameless=True)
+                                        frameless=True, confirm_close=True)
     # by default, webview will start with debug=False
     webview.start(debug=self.debug)
 

@@ -30,7 +30,7 @@ def check_duplicate_emails(form, field):
 
 class PageForm(FlaskForm):
   def __init__(self, allowed_classes=None, *args, **kwargs):
-    super(PageForm, self).__init__(*args, **kwargs)
+    super().__init__(*args, **kwargs)
     self.allowed_classes = allowed_classes or []
 
     fields_to_remove = [field_name for field_name in self._fields if field_name not in self.allowed_classes]

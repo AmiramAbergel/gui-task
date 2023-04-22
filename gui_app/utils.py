@@ -12,13 +12,11 @@ CONFIG_FILE = 'config.yaml'
 def read_yaml():
   if not os.path.exists(CONFIG_FILE):
     return generate_random_config()
-  else:
-    with open(CONFIG_FILE, 'r') as yaml_file:
-      try:
-        data = yaml.load(yaml_file, Loader=FullLoader)
-        return data
-      except yaml.YAMLError as e:
-        return {}
+  with open(CONFIG_FILE, 'r') as yaml_file:
+    try:
+      return yaml.load(yaml_file, Loader=FullLoader)
+    except yaml.YAMLError:
+      return {}
 
 
 def write_yaml(data):
@@ -30,7 +28,7 @@ def write_yaml(data):
   with open(CONFIG_FILE, 'w') as yaml_file:
     try:
       yaml.safe_dump(existing_data, yaml_file)
-    except yaml.YAMLError as e:
+    except yaml.YAMLError:
       return {}
 
 
@@ -55,20 +53,32 @@ def generate_random_config():
     'hardware_acceleration': True
   }
   write_yaml(config_data)
-
   return config_data
 
 
-def file_upload(file, form, app, route_name):
+def save_uploaded_file(file, folder, form):
+  filename = secure_filename(file.filename)
+  file_path = os.path.join(folder, filename)
+  file.save(file_path)
+  form.report_background_image.data = {'filename': filename, 'path': file_path}
+  return file_path
+
+
+def update_form_with_uploaded_file(file, form, app):
+  folder = os.path.join(app.static_folder, 'report_background_image')
   if file:
-    filename = secure_filename(file.filename)
-    file_path = os.path.join(app.static_folder, 'report_background_image', filename)
-    file.save(file_path)
-    form.report_background_image.data = {'filename': filename, 'path': file_path}
+    save_uploaded_file(file, folder, form)
   updated_form = tests_convert_to_dict(form.data)
   write_yaml(updated_form)
 
-  return redirect(url_for(route_name))
+
+def update_form_without_uploaded_file(form, config_data):
+  if config_data and 'report_background_image' in config_data:
+    report_bg_image = config_data['report_background_image']
+    if report_bg_image and 'path' in report_bg_image and 'filename' in report_bg_image:
+      form.report_background_image.data = {'filename': report_bg_image['filename'], 'path': report_bg_image['path']}
+  updated_form = tests_convert_to_dict(form.data)
+  write_yaml(updated_form)
 
 
 def tests_convert_to_dict(form_data):
@@ -94,16 +104,9 @@ def process_form(form, app, route_name, config_data=None):
   form.process(request.form)
   file = request.files.get('report_background_image')
 
-  if file:
-    return file_upload(file, form, app, route_name)
-  else:
-    if config_data and 'report_background_image' in config_data:
-      report_bg_image = config_data['report_background_image']
-      if report_bg_image and 'path' in report_bg_image and 'filename' in report_bg_image:
-        form.report_background_image.data = {'filename': report_bg_image['filename'], 'path': report_bg_image['path']}
-    updated_form = tests_convert_to_dict(form.data)
-    write_yaml(updated_form)
-    return redirect(url_for(route_name))
+  update_form_with_uploaded_file(file, form, app) if file else update_form_without_uploaded_file(form, config_data)
+
+  return redirect(url_for(route_name))
 
 
 def shutdown_server(gui_app):

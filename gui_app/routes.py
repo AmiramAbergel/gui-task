@@ -13,7 +13,7 @@ def router(app, gui_app):
     config_data = read_yaml()
     form = PageForm(allowed_classes=page_one_classes)
     if form.validate_on_submit():
-      return process_form(form, app, 'page_two')
+      return process_form(form, app, 'page_two', config_data)
 
     return render_template('pageOne.html', form=form, config=config_data, page_one_classes=page_one_classes,
                            page_two_classes=page_two_classes)

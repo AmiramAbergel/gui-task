@@ -10,7 +10,6 @@ from gui_app.utils import read_yaml
 
 
 class GUIApp:
-
   def __init__(self, debug=False):
     self.app = self._initialize_app()
     self.app.secret_key = 'secret'
@@ -42,7 +41,7 @@ class GUIApp:
     self.window.destroy()
 
   def _start_webview(self):
-    self.window = webview.create_window('Frameless window', "http://127.0.0.1:5000", min_size=(800, 600),
+    self.window = webview.create_window('Frameless window', 'http://127.0.0.1:5000', min_size=(800, 600),
                                         frameless=True)
     # by default, webview will start with debug=False
     webview.start(debug=self.debug)
@@ -59,7 +58,7 @@ def main(debug):
     format='%(name)s - %(levelname)s - %(message)s',
     level=logging.ERROR
   )
-  if debug == False:
+  if not debug:
     logging.getLogger('werkzeug').disabled = True
     os.environ['WERKZEUG_RUN_MAIN'] = 'true'
   gui_app = GUIApp(debug)

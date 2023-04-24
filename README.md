@@ -57,11 +57,16 @@ To run the application, navigate to the project directory where this Readme file
 
 ## Screenshot
 
-![Screenshot 2023-04-08 203032](https://user-images.githubusercontent.com/39462161/230735257-496f1562-1603-46b1-ab51-9db061d68c35.png)
-![Screenshot 2023-04-08 203207](https://user-images.githubusercontent.com/39462161/230735268-c8182aac-9ec2-4365-8440-f8182fa7d067.png)
+![gui_page1_screenshot](https://user-images.githubusercontent.com/39462161/233947547-8ddb9da4-85e2-4679-a7b0-693c29e2d81f.png)
+![gui_page2_screenshot](https://user-images.githubusercontent.com/39462161/233947565-603a2152-8ba9-4050-97a0-b5e87c26993c.png)
+
 
 
 
 ## Video
+
+
+
+https://user-images.githubusercontent.com/39462161/233947664-189e538e-7c16-4e73-b84e-a384d7a64fc6.mp4
 
 
